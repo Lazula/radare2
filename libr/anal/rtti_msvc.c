@@ -371,14 +371,16 @@ static void rtti_msvc_print_base_class_descriptor(rtti_base_class_descriptor *bc
 
 static void rtti_msvc_print_base_class_descriptor_json(PJ *pj, rtti_base_class_descriptor *bcd) {
 	pj_o (pj);
-	pj_kn (pj, "type_desc_addr", bcd->type_descriptor_addr);
-	pj_kn (pj, "num_contained_bases", bcd->num_contained_bases);
+	pj_kn (pj, "type_desc_addr", (ut64)bcd->type_descriptor_addr);
+	pj_kn (pj, "num_contained_bases", (ut64)bcd->num_contained_bases);
+
 	pj_ko (pj, "where");
-	pj_ki (pj, "mdisp", bcd->where.mdisp);
-	pj_ki (pj, "pdisp", bcd->where.pdisp);
-	pj_ki (pj, "vdisp", bcd->where.vdisp);
-	pj_end (pj);
-	pj_kn (pj, "attributes", bcd->attributes);
+	pj_kN (pj, "mdisp", bcd->where.mdisp);
+	pj_kN (pj, "pdisp", bcd->where.pdisp);
+	pj_kN (pj, "vdisp", bcd->where.vdisp);
+	pj_end (pj); /* o where */
+
+	pj_kn (pj, "attributes", (ut64)bcd->attributes);
 	pj_end (pj);
 }
 
@@ -431,8 +433,7 @@ R_API void r_anal_rtti_msvc_print_complete_object_locator(RVTableContext *contex
 			return;
 		}
 		rtti_msvc_print_complete_object_locator_json (pj, &col);
-		r_cons_print (pj_string (pj));
-		pj_free (pj);
+		r_cons_print (pj_drain (pj));
 	} else {
 		rtti_msvc_print_complete_object_locator (&col, addr, "");
 	}
@@ -451,8 +452,7 @@ R_API void r_anal_rtti_msvc_print_type_descriptor(RVTableContext *context, ut64 
 			return;
 		}
 		rtti_msvc_print_type_descriptor_json (pj, &td);
-		r_cons_print (pj_string (pj));
-		pj_free (pj);
+		r_cons_print (pj_drain (pj));
 	} else {
 		rtti_msvc_print_type_descriptor (&td, addr, "");
 	}
@@ -473,8 +473,7 @@ R_API void r_anal_rtti_msvc_print_class_hierarchy_descriptor(RVTableContext *con
 			return;
 		}
 		rtti_msvc_print_class_hierarchy_descriptor_json (pj, &chd);
-		r_cons_print (pj_string (pj));
-		pj_free (pj);
+		r_cons_print (pj_drain (pj));
 	} else {
 		rtti_msvc_print_class_hierarchy_descriptor (&chd, addr, "");
 	}
@@ -493,8 +492,7 @@ R_API void r_anal_rtti_msvc_print_base_class_descriptor(RVTableContext *context,
 			return;
 		}
 		rtti_msvc_print_base_class_descriptor_json (pj, &bcd);
-		r_cons_print (pj_string (pj));
-		pj_free (pj);
+		r_cons_print (pj_drain (pj));
 	} else {
 		rtti_msvc_print_base_class_descriptor (&bcd, "");
 	}
@@ -585,9 +583,6 @@ static bool rtti_msvc_print_complete_object_locator_recurse(RVTableContext *cont
 		if (use_json) {
 			pj_o (pj);
 			pj_k (pj, "desc");
-		}
-
-		if (use_json) {
 			rtti_msvc_print_base_class_descriptor_json (pj, bcd);
 		} else {
 			rtti_msvc_print_base_class_descriptor (bcd, "\t\t");
@@ -610,14 +605,14 @@ static bool rtti_msvc_print_complete_object_locator_recurse(RVTableContext *cont
 		}
 
 		if(use_json) {
-			pj_end (pj);
+			pj_end (pj); /* o bcd */
 		}
 	}
+
 	if (use_json) {
+		pj_end (pj); /* a base_classes */
 		pj_end (pj);
-		pj_end (pj);
-		r_cons_print (pj_string (pj));
-		pj_free (pj);
+		r_cons_print (pj_drain (pj));
 	}
 
 	rtti_type_descriptor_fini (&td);
