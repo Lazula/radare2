@@ -305,33 +305,29 @@ static ut32 arm_disasm_halfwordtrans(struct winedbg_arm_insn *arminsn, ut32 inst
 }
 
 static ut32 arm_disasm_blocktrans(struct winedbg_arm_insn *arminsn, ut32 inst) {
+	PJ *pj;
 	short load      = (inst >> 20) & 0x01;
 	short writeback = (inst >> 21) & 0x01;
 	short psr       = (inst >> 22) & 0x01;
 	short addrmode  = (inst >> 23) & 0x03;
 	short i;
-	short last=15;
 
-	for (i=15;i>=0;i--) {
-		if ((inst>>i) & 1) {
-			last = i;
-			break;
-		}
+	pj = pj_new() ;
+	if (!pj) {
+		return 1;
 	}
 
-	//TODO PJ
-	arminsn->str_asm = r_str_appendf (arminsn->str_asm, "%s%s%s %s%s, {", load ? "ldm" : "stm", tbl_addrmode[addrmode],
+	arminsn->str_asm = r_str_appendf (arminsn->str_asm, "%s%s%s %s%s, ", load ? "ldm" : "stm", tbl_addrmode[addrmode],
 			get_cond (inst), tbl_regs[get_nibble (inst, 4)], writeback ? "!" : "");
+	pj_o (pj);
 	for (i=0;i<=15;i++) {
 		if ((inst>>i) & 1) {
-			if (i == last) {
-				arminsn->str_asm = r_str_appendf (arminsn->str_asm, "%s", tbl_regs[i]);
-			} else {
-				arminsn->str_asm = r_str_appendf (arminsn->str_asm, "%s, ", tbl_regs[i]);
-			}
+			pj_s (pj, tbl_regs[i]);
 		}
 	}
-	arminsn->str_asm = r_str_appendf (arminsn->str_asm, "}%s", psr ? "^" : "");
+	pj_end (pj);
+
+	arminsn->str_asm = r_str_appendf (arminsn->str_asm, "%s%s", pj_drain (pj), psr ? "^" : "");
 	return 0;
 }
 
@@ -430,66 +426,64 @@ static ut16 thumb_disasm_aluop(struct winedbg_arm_insn *arminsn, ut16 inst) {
 }
 
 static ut16 thumb_disasm_pushpop(struct winedbg_arm_insn *arminsn, ut16 inst) {
+	PJ *pj;
 	short lrpc = (inst >> 8)  & 0x01;
 	short load = (inst >> 11) & 0x01;
 	short i;
-	short last;
 
 	for (i=7;i>=0;i--) {
 		if ((inst>>i) & 1) {
 			break;
 		}
 	}
-	last = i;
 
-	//TODO PJ
-	arminsn->str_asm = r_str_appendf (arminsn->str_asm, "%s {", load ? "pop" : "push");
+	pj = pj_new ();
+	if (!pj) {
+		return 1;
+	}
+
+	arminsn->str_asm = r_str_appendf (arminsn->str_asm, "%s ", load ? "pop" : "push");
+
+	pj_o (pj);
 
 	for (i=0;i<=7;i++) {
 		if ((inst>>i) & 1) {
-			if (i == last) {
-				arminsn->str_asm = r_str_appendf (arminsn->str_asm, "%s", tbl_regs[i]);
-			}
-			else {
-				arminsn->str_asm = r_str_appendf (arminsn->str_asm, "%s, ", tbl_regs[i]);
-			}
+			pj_s (pj, tbl_regs[i]);
 		}
 	}
 	if (lrpc) {
-		arminsn->str_asm = r_str_appendf (arminsn->str_asm, "%s%s", last ? ", " : "", load ? "pc" : "lr");
+		pj_s(pj, load ? "pc" : "lr");
 	}
 
-	arminsn->str_asm = r_str_appendf (arminsn->str_asm, "}");
+	pj_end (pj);
+
+	arminsn->str_asm = r_str_appendf (arminsn->str_asm, "%s", pj_drain (pj));
 	return 0;
 }
 
 static ut16 thumb_disasm_blocktrans(struct winedbg_arm_insn *arminsn, ut16 inst) {
+	PJ *pj;
 	short load = (inst >> 11) & 0x01;
 	short i;
-	short last;
 
-	for (i=7;i>=0;i--) {
-		if ((inst>>i) & 1) {
-			break;
-		}
+	arminsn->str_asm = r_str_appendf (arminsn->str_asm, "%s %s!, ", load ? "ldmia" : "stmia", tbl_regs[(inst >> 8) & 0x07]);
+
+	pj = pj_new ();
+	if (!pj) {
+		return 1;
 	}
-	last = i;
 
-	//TODO PJ
-	arminsn->str_asm = r_str_appendf (arminsn->str_asm, "%s %s!, {", load ? "ldmia" : "stmia", tbl_regs[(inst >> 8) & 0x07]);
+	pj_o (pj);
 
 	for (i=0;i<=7;i++) {
 		if ((inst>>i) & 1) {
-			if (i == last) {
-				arminsn->str_asm = r_str_appendf (arminsn->str_asm, "%s", tbl_regs[i]);
-			}
-			else {
-				arminsn->str_asm = r_str_appendf (arminsn->str_asm, "%s, ", tbl_regs[i]);
-			}
+			pj_s (pj, tbl_regs[i]);
 		}
 	}
 
-	arminsn->str_asm = r_str_appendf (arminsn->str_asm, "}");
+	pj_end (pj);
+
+	arminsn->str_asm = r_str_appendf (arminsn->str_asm, pj_drain (pj));
 	return 0;
 }
 
