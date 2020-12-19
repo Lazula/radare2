@@ -1046,7 +1046,7 @@ R_API void r_anal_class_json(RAnal *anal, PJ *j, const char *class_name) {
 			pj_o (j);
 			pj_ks (j, "id", base->id);
 			pj_ks (j, "name", base->class_name);
-			pj_kn (j, "offset", base->offset);
+			pj_kU (j, "offset", base->offset);
 			pj_end (j);
 		}
 		r_vector_free (bases);
@@ -1061,8 +1061,8 @@ R_API void r_anal_class_json(RAnal *anal, PJ *j, const char *class_name) {
 		r_vector_foreach (vtables, vtable) {
 			pj_o (j);
 			pj_ks (j, "id", vtable->id);
-			pj_kn (j, "addr", vtable->addr);
-			pj_kn (j, "offset", vtable->offset);
+			pj_kU (j, "addr", vtable->addr);
+			pj_kU (j, "offset", vtable->offset);
 			pj_end (j);
 		}
 	}
@@ -1076,9 +1076,9 @@ R_API void r_anal_class_json(RAnal *anal, PJ *j, const char *class_name) {
 		r_vector_foreach (methods, meth) {
 			pj_o (j);
 			pj_ks (j, "name", meth->name);
-			pj_kn (j, "addr", meth->addr);
+			pj_kU (j, "addr", meth->addr);
 			if (meth->vtable_offset >= 0) {
-				pj_kn (j, "vtable_offset", (ut64)meth->vtable_offset);
+				pj_kU (j, "vtable_offset", (ut64)meth->vtable_offset);
 			}
 			pj_end (j);
 		}

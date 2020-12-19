@@ -318,7 +318,7 @@ static bool print_flag_json(RFlagItem *flag, void *user) {
 	if (flag->alias) {
 		pj_ks (u->pj, "alias", flag->alias);
 	} else {
-		pj_kn (u->pj, "offset", flag->offset);
+		pj_kU (u->pj, "offset", flag->offset);
 	}
 	if (flag->comment) {
 		pj_ks (u->pj, "comment", flag->comment);

@@ -1620,11 +1620,11 @@ static void listGraph(RAnal *a, RSignItem *it, PJ *pj, int format) {
 			it->name, graph->cc, graph->nbbs, graph->edges, graph->ebbs, graph->bbsum);
 	} else if (format == 'j') {
 		pj_ko (pj, "graph");
-		pj_kN (pj, "cc", graph->cc);
-		pj_kN (pj, "nbbs", graph->nbbs);
-		pj_kN (pj, "edges", graph->edges);
-		pj_kN (pj, "ebbs", graph->ebbs);
-		pj_kN (pj, "bbsum", graph->bbsum);
+		pj_kS (pj, "cc", graph->cc);
+		pj_kS (pj, "nbbs", graph->nbbs);
+		pj_kS (pj, "edges", graph->edges);
+		pj_kS (pj, "ebbs", graph->ebbs);
+		pj_kS (pj, "bbsum", graph->bbsum);
 		pj_end (pj);
 	} else {
 		a->cb_printf ("  graph: cc=%d nbbs=%d edges=%d ebbs=%d bbsum=%d\n",
@@ -1668,7 +1668,7 @@ static void listOffset(RAnal *a, RSignItem *it, PJ *pj, int format) {
 	} else if (format == '*') {
 		a->cb_printf ("za %s o 0x%08"PFMT64x"\n", it->name, it->addr);
 	} else if (format == 'j') {
-		pj_kN (pj, "addr", it->addr);
+		pj_kS (pj, "addr", it->addr);
 	} else {
 		a->cb_printf ("  addr: 0x%08"PFMT64x"\n", it->addr);
 	}
@@ -1977,7 +1977,7 @@ static bool listCB(void *user, const char *k, const char *v) {
 	if (it->addr != UT64_MAX) {
 		listOffset (a, it, ctx->pj, ctx->format);
 	} else if (ctx->format == 'j') {
-		pj_kN (ctx->pj, "addr", -1);
+		pj_kS (ctx->pj, "addr", -1);
 	}
 	// Name
 	if (it->realname) {

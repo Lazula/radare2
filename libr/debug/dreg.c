@@ -181,7 +181,7 @@ R_API bool r_debug_reg_list(RDebug *dbg, int type, int size, int rad, const char
 			r_reg_arena_swap (dbg->reg, false);
 			delta = value - diff;
 			if (isJson) {
-				pj_kn (pj, item->name, value);
+				pj_kU (pj, item->name, value);
 			} else {
 				if (pr && pr->wide_offsets && dbg->bits & R_SYS_BITS_64) {
 					snprintf (strvalue, sizeof (strvalue),"0x%016"PFMT64x, value);

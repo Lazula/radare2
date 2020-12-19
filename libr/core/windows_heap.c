@@ -1204,10 +1204,10 @@ static void w32_list_heaps(RCore *core, const char format) {
 		switch (format) {
 		case 'j':
 			pj_o (pj);
-			pj_kN (pj, "address", (ut64)heap.Base);
-			pj_kN (pj, "count", (ut64)heap.BlockCount);
-			pj_kN (pj, "allocated", (ut64)heap.Allocated);
-			pj_kN (pj, "committed", (ut64)heap.Committed);
+			pj_kS (pj, "address", (ut64)heap.Base);
+			pj_kS (pj, "count", (ut64)heap.BlockCount);
+			pj_kS (pj, "allocated", (ut64)heap.Allocated);
+			pj_kS (pj, "committed", (ut64)heap.Committed);
 			pj_end (pj);
 			break;
 		default:
@@ -1259,7 +1259,7 @@ static void w32_list_heaps_blocks(RCore *core, const char format) {
 			break;
 		case 'j':
 			pj_o (pj);
-			pj_kN (pj, "heap", (WPARAM)heapInfo->heaps[i].Base);
+			pj_kS (pj, "heap", (WPARAM)heapInfo->heaps[i].Base);
 			pj_k (pj, "blocks");
 			pj_a (pj);
 			break;
@@ -1284,10 +1284,10 @@ static void w32_list_heaps_blocks(RCore *core, const char format) {
 				}
 				case 'j':
 					pj_o (pj);
-					pj_kN (pj, "header_address", address);
-					pj_kN (pj, "user_address", (ut64)block->dwAddress);
-					pj_kN (pj, "unused", unusedBytes);
-					pj_kN (pj, "size", block->dwSize);
+					pj_kS (pj, "header_address", address);
+					pj_kS (pj, "user_address", (ut64)block->dwAddress);
+					pj_kS (pj, "unused", unusedBytes);
+					pj_kS (pj, "size", block->dwSize);
 					pj_ks (pj, "type", type);
 					pj_end (pj);
 					break;
@@ -1355,12 +1355,12 @@ static void cmd_debug_map_heap_block_win(RCore *core, const char *input) {
 				break;
 			case 'j':
 				pj_o (pj);
-				pj_kN (pj, "header_address", headerAddr);
-				pj_kN (pj, "user_address", off);
+				pj_kS (pj, "header_address", headerAddr);
+				pj_kS (pj, "user_address", off);
 				pj_ks (pj, "type", type);
-				pj_kN (pj, "size", hb->dwSize);
+				pj_kS (pj, "size", hb->dwSize);
 				if (hb->extraInfo->unusedBytes) {
-					pj_kN (pj, "unused", hb->extraInfo->unusedBytes);
+					pj_kS (pj, "unused", hb->extraInfo->unusedBytes);
 				}
 				pj_end (pj);
 				r_cons_println (pj_string (pj));

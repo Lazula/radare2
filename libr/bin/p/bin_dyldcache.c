@@ -1901,49 +1901,49 @@ static void header(RBinFile *bf) {
 	pj_k (pj, "header");
 	pj_o (pj);
 	pj_ks (pj, "magic", cache->hdr->magic);
-	pj_kn (pj, "mappingOffset", cache->hdr->mappingOffset);
-	pj_kn (pj, "mappingCount", cache->hdr->mappingCount);
-	pj_kn (pj, "imagesOffset", cache->hdr->imagesOffset);
-	pj_kn (pj, "imagesCount", cache->hdr->imagesCount);
-	pj_kn (pj, "dyldBaseAddress", cache->hdr->dyldBaseAddress);
-	pj_kn (pj, "codeSignatureOffset", cache->hdr->codeSignatureOffset);
-	pj_kn (pj, "codeSignatureSize", cache->hdr->codeSignatureSize);
-	pj_kn (pj, "slideInfoOffset", cache->hdr->slideInfoOffset);
-	pj_kn (pj, "slideInfoSize", cache->hdr->slideInfoSize);
-	pj_kn (pj, "localSymbolsOffset", cache->hdr->localSymbolsOffset);
-	pj_kn (pj, "localSymbolsSize", cache->hdr->localSymbolsSize);
+	pj_kU (pj, "mappingOffset", cache->hdr->mappingOffset);
+	pj_kU (pj, "mappingCount", cache->hdr->mappingCount);
+	pj_kU (pj, "imagesOffset", cache->hdr->imagesOffset);
+	pj_kU (pj, "imagesCount", cache->hdr->imagesCount);
+	pj_kU (pj, "dyldBaseAddress", cache->hdr->dyldBaseAddress);
+	pj_kU (pj, "codeSignatureOffset", cache->hdr->codeSignatureOffset);
+	pj_kU (pj, "codeSignatureSize", cache->hdr->codeSignatureSize);
+	pj_kU (pj, "slideInfoOffset", cache->hdr->slideInfoOffset);
+	pj_kU (pj, "slideInfoSize", cache->hdr->slideInfoSize);
+	pj_kU (pj, "localSymbolsOffset", cache->hdr->localSymbolsOffset);
+	pj_kU (pj, "localSymbolsSize", cache->hdr->localSymbolsSize);
 	char uuidstr[128];
 	r_hex_bin2str ((ut8*)cache->hdr->uuid, 16, uuidstr);
 	pj_ks (pj, "uuid", uuidstr);
 	pj_ks (pj, "cacheType", (cache->hdr->cacheType == 0) ? "development" : "production");
-	pj_kn (pj, "branchPoolsOffset", cache->hdr->branchPoolsOffset);
-	pj_kn (pj, "branchPoolsCount", cache->hdr->branchPoolsCount);
-	pj_kn (pj, "accelerateInfoAddr", cache->hdr->accelerateInfoAddr + slide);
-	pj_kn (pj, "accelerateInfoSize", cache->hdr->accelerateInfoSize);
-	pj_kn (pj, "imagesTextOffset", cache->hdr->imagesTextOffset);
-	pj_kn (pj, "imagesTextCount", cache->hdr->imagesTextCount);
+	pj_kU (pj, "branchPoolsOffset", cache->hdr->branchPoolsOffset);
+	pj_kU (pj, "branchPoolsCount", cache->hdr->branchPoolsCount);
+	pj_kU (pj, "accelerateInfoAddr", cache->hdr->accelerateInfoAddr + slide);
+	pj_kU (pj, "accelerateInfoSize", cache->hdr->accelerateInfoSize);
+	pj_kU (pj, "imagesTextOffset", cache->hdr->imagesTextOffset);
+	pj_kU (pj, "imagesTextCount", cache->hdr->imagesTextCount);
 	pj_end (pj);
 
 	if (cache->accel) {
 		pj_k (pj, "accelerator");
 		pj_o (pj);
-		pj_kn (pj, "version", cache->accel->version);
-		pj_kn (pj, "imageExtrasCount", cache->accel->imageExtrasCount);
-		pj_kn (pj, "imagesExtrasOffset", cache->accel->imagesExtrasOffset);
-		pj_kn (pj, "bottomUpListOffset", cache->accel->bottomUpListOffset);
-		pj_kn (pj, "dylibTrieOffset", cache->accel->dylibTrieOffset);
-		pj_kn (pj, "dylibTrieSize", cache->accel->dylibTrieSize);
-		pj_kn (pj, "initializersOffset", cache->accel->initializersOffset);
-		pj_kn (pj, "initializersCount", cache->accel->initializersCount);
-		pj_kn (pj, "dofSectionsOffset", cache->accel->dofSectionsOffset);
-		pj_kn (pj, "dofSectionsCount", cache->accel->dofSectionsCount);
-		pj_kn (pj, "reExportListOffset", cache->accel->reExportListOffset);
-		pj_kn (pj, "reExportCount", cache->accel->reExportCount);
-		pj_kn (pj, "depListOffset", cache->accel->depListOffset);
-		pj_kn (pj, "depListCount", cache->accel->depListCount);
-		pj_kn (pj, "rangeTableOffset", cache->accel->rangeTableOffset);
-		pj_kn (pj, "rangeTableCount", cache->accel->rangeTableCount);
-		pj_kn (pj, "dyldSectionAddr", cache->accel->dyldSectionAddr + slide);
+		pj_kU (pj, "version", cache->accel->version);
+		pj_kU (pj, "imageExtrasCount", cache->accel->imageExtrasCount);
+		pj_kU (pj, "imagesExtrasOffset", cache->accel->imagesExtrasOffset);
+		pj_kU (pj, "bottomUpListOffset", cache->accel->bottomUpListOffset);
+		pj_kU (pj, "dylibTrieOffset", cache->accel->dylibTrieOffset);
+		pj_kU (pj, "dylibTrieSize", cache->accel->dylibTrieSize);
+		pj_kU (pj, "initializersOffset", cache->accel->initializersOffset);
+		pj_kU (pj, "initializersCount", cache->accel->initializersCount);
+		pj_kU (pj, "dofSectionsOffset", cache->accel->dofSectionsOffset);
+		pj_kU (pj, "dofSectionsCount", cache->accel->dofSectionsCount);
+		pj_kU (pj, "reExportListOffset", cache->accel->reExportListOffset);
+		pj_kU (pj, "reExportCount", cache->accel->reExportCount);
+		pj_kU (pj, "depListOffset", cache->accel->depListOffset);
+		pj_kU (pj, "depListCount", cache->accel->depListCount);
+		pj_kU (pj, "rangeTableOffset", cache->accel->rangeTableOffset);
+		pj_kU (pj, "rangeTableCount", cache->accel->rangeTableCount);
+		pj_kU (pj, "dyldSectionAddr", cache->accel->dyldSectionAddr + slide);
 		pj_end (pj);
 	}
 
@@ -1954,30 +1954,30 @@ static void header(RBinFile *bf) {
 		for (i = 0; i < cache->rebase_infos->length; i++) {
 			RDyldRebaseInfo * rebase_info = cache->rebase_infos->entries[i].info;
 			pj_o (pj);
-			pj_kn (pj, "start", cache->rebase_infos->entries[i].start);
-			pj_kn (pj, "end", cache->rebase_infos->entries[i].end);
+			pj_kU (pj, "start", cache->rebase_infos->entries[i].start);
+			pj_kU (pj, "end", cache->rebase_infos->entries[i].end);
 			if (rebase_info) {
 				ut8 version = rebase_info->version;
-				pj_kn (pj, "version", version);
-				pj_kn (pj, "slide", slide);
+				pj_kU (pj, "version", version);
+				pj_kU (pj, "slide", slide);
 				if (version == 3) {
 					RDyldRebaseInfo3 *info3 = (RDyldRebaseInfo3*) rebase_info;
-					pj_kn (pj, "page_starts_count", info3->page_starts_count);
-					pj_kn (pj, "page_size", info3->page_size);
-					pj_kn (pj, "auth_value_add", info3->auth_value_add);
+					pj_kU (pj, "page_starts_count", info3->page_starts_count);
+					pj_kU (pj, "page_size", info3->page_size);
+					pj_kU (pj, "auth_value_add", info3->auth_value_add);
 				} else if (version == 2 || version == 4) {
 					RDyldRebaseInfo2 *info2 = (RDyldRebaseInfo2*) rebase_info;
-					pj_kn (pj, "page_starts_count", info2->page_starts_count);
-					pj_kn (pj, "page_extras_count", info2->page_extras_count);
-					pj_kn (pj, "delta_mask", info2->delta_mask);
-					pj_kn (pj, "value_mask", info2->value_mask);
-					pj_kn (pj, "delta_shift", info2->delta_shift);
-					pj_kn (pj, "page_size", info2->page_size);
+					pj_kU (pj, "page_starts_count", info2->page_starts_count);
+					pj_kU (pj, "page_extras_count", info2->page_extras_count);
+					pj_kU (pj, "delta_mask", info2->delta_mask);
+					pj_kU (pj, "value_mask", info2->value_mask);
+					pj_kU (pj, "delta_shift", info2->delta_shift);
+					pj_kU (pj, "page_size", info2->page_size);
 				} else if (version == 1) {
 					RDyldRebaseInfo1 *info1 = (RDyldRebaseInfo1*) rebase_info;
-					pj_kn (pj, "toc_count", info1->toc_count);
-					pj_kn (pj, "entries_size", info1->entries_size);
-					pj_kn (pj, "page_size", 4096);
+					pj_kU (pj, "toc_count", info1->toc_count);
+					pj_kU (pj, "entries_size", info1->entries_size);
+					pj_kU (pj, "page_size", 4096);
 				}
 			}
 			pj_end (pj);
@@ -2003,8 +2003,8 @@ static void header(RBinFile *bf) {
 			r_hex_bin2str ((ut8*)text_info->uuid, 16, uuidstr);
 			pj_o (pj);
 			pj_ks (pj, "uuid", uuidstr);
-			pj_kn (pj, "address", text_info->loadAddress + slide);
-			pj_kn (pj, "textSegmentSize", text_info->textSegmentSize);
+			pj_kU (pj, "address", text_info->loadAddress + slide);
+			pj_kU (pj, "textSegmentSize", text_info->textSegmentSize);
 			char file[256];
 			if (r_buf_read_at (cache->buf, text_info->pathOffset, (ut8*) &file, sizeof (file)) == sizeof (file)) {
 				file[255] = 0;

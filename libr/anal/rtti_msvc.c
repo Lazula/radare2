@@ -300,12 +300,12 @@ static void rtti_msvc_print_complete_object_locator(rtti_complete_object_locator
 
 static void rtti_msvc_print_complete_object_locator_json(PJ *pj, rtti_complete_object_locator *col) {
 	pj_o (pj);
-	pj_kn (pj, "signature", col->signature);
-	pj_kn (pj, "vftable_offset", col->vtable_offset);
-	pj_kn (pj, "cd_offset", col->cd_offset);
-	pj_kn (pj, "type_desc_addr", col->type_descriptor_addr);
-	pj_kn (pj, "class_desc_addr", col->class_descriptor_addr);
-	pj_kn (pj, "object_base", col->object_base);
+	pj_kU (pj, "signature", col->signature);
+	pj_kU (pj, "vftable_offset", col->vtable_offset);
+	pj_kU (pj, "cd_offset", col->cd_offset);
+	pj_kU (pj, "type_desc_addr", col->type_descriptor_addr);
+	pj_kU (pj, "class_desc_addr", col->class_descriptor_addr);
+	pj_kU (pj, "object_base", col->object_base);
 	pj_end (pj);
 }
 
@@ -322,8 +322,8 @@ static void rtti_msvc_print_type_descriptor(rtti_type_descriptor *td, ut64 addr,
 
 static void rtti_msvc_print_type_descriptor_json(PJ *pj, rtti_type_descriptor *td) {
 	pj_o (pj);
-	pj_kn (pj, "vtable_addr", td->vtable_addr);
-	pj_kn (pj, "spare", td->spare);
+	pj_kU (pj, "vtable_addr", td->vtable_addr);
+	pj_kU (pj, "spare", td->spare);
 	pj_ks (pj, "name", td->name);
 	pj_end (pj);
 }
@@ -343,10 +343,10 @@ static void rtti_msvc_print_class_hierarchy_descriptor(rtti_class_hierarchy_desc
 
 static void rtti_msvc_print_class_hierarchy_descriptor_json(PJ *pj, rtti_class_hierarchy_descriptor *chd) {
 	pj_o (pj);
-	pj_kn (pj, "signature", chd->signature);
-	pj_kn (pj, "attributes", chd->attributes);
-	pj_kn (pj, "num_base_classes", chd->num_base_classes);
-	pj_kn (pj, "base_class_array_addr", chd->base_class_array_addr);
+	pj_kU (pj, "signature", chd->signature);
+	pj_kU (pj, "attributes", chd->attributes);
+	pj_kU (pj, "num_base_classes", chd->num_base_classes);
+	pj_kU (pj, "base_class_array_addr", chd->base_class_array_addr);
 	pj_end (pj);
 }
 
@@ -371,16 +371,16 @@ static void rtti_msvc_print_base_class_descriptor(rtti_base_class_descriptor *bc
 
 static void rtti_msvc_print_base_class_descriptor_json(PJ *pj, rtti_base_class_descriptor *bcd) {
 	pj_o (pj);
-	pj_kn (pj, "type_desc_addr", (ut64)bcd->type_descriptor_addr);
-	pj_kn (pj, "num_contained_bases", (ut64)bcd->num_contained_bases);
+	pj_kU (pj, "type_desc_addr", bcd->type_descriptor_addr);
+	pj_kU (pj, "num_contained_bases", bcd->num_contained_bases);
 
 	pj_ko (pj, "where");
-	pj_kN (pj, "mdisp", bcd->where.mdisp);
-	pj_kN (pj, "pdisp", bcd->where.pdisp);
-	pj_kN (pj, "vdisp", bcd->where.vdisp);
+	pj_kS (pj, "mdisp", bcd->where.mdisp);
+	pj_kS (pj, "pdisp", bcd->where.pdisp);
+	pj_kS (pj, "vdisp", bcd->where.vdisp);
 	pj_end (pj); /* o where */
 
-	pj_kn (pj, "attributes", (ut64)bcd->attributes);
+	pj_kU (pj, "attributes", bcd->attributes);
 	pj_end (pj);
 }
 

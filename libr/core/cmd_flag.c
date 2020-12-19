@@ -696,7 +696,7 @@ static bool print_function_labels_cb(void *user, const ut64 addr, const void *v)
 		r_cons_printf ("f.%s@0x%08"PFMT64x"\n", name, addr);
 		break;
 	case 'j':
-		pj_kn (ctx->pj, name, addr);
+		pj_kU (ctx->pj, name, addr);
 		break;
 	default:
 		r_cons_printf ("0x%08"PFMT64x" %s   [%s + %"PFMT64d"]\n",
@@ -1401,8 +1401,8 @@ rep:
 						pj_o (pj);
 						pj_ks (pj, "name", item->name);
 						pj_ks (pj, "realname", item->realname);
-						pj_kn (pj, "offset", item->offset);
-						pj_kn (pj, "size", item->size);
+						pj_kU (pj, "offset", item->offset);
+						pj_kU (pj, "size", item->size);
 						pj_end (pj);
 					}
 					break;
@@ -1578,7 +1578,7 @@ rep:
 					if (strchr (input, 'j')) {
 						PJ *pj = pj_new (); 
 						pj_o (pj);
-						pj_kn (pj, "offset", f->offset);
+						pj_kU (pj, "offset", f->offset);
 						pj_ks (pj, "name", f->name);
 						// Print flag's real name if defined
 						if (f->realname) {

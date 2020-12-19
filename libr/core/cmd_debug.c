@@ -1315,8 +1315,8 @@ show_help:
 			{
 				/* Escape backslashes (e.g. for Windows). */
 				pj_o (pj);
-				pj_kn (pj, "addr", map->addr);
-				pj_kn (pj, "addr_end", map->addr_end);
+				pj_kU (pj, "addr", map->addr);
+				pj_kU (pj, "addr_end", map->addr_end);
 				pj_ks (pj, "file", map->file);
 				pj_ks (pj, "name", map->name);
 				pj_end (pj);
@@ -2101,7 +2101,7 @@ static void cmd_reg_profile(RCore *core, char from, const char *str) { // "arp" 
 			for (i = 0; i < R_REG_NAME_LAST; i++) {
 				if (core->dbg->reg->name[i]) {
 					pj_o (pj);
-					pj_kn (pj, "role", i);
+					pj_kU (pj, "role", i);
 					pj_ks (pj, "role_str", r_reg_get_role (i));
 					pj_ks (pj, "reg", core->dbg->reg->name[i]);
 					pj_end (pj);
@@ -2113,11 +2113,11 @@ static void cmd_reg_profile(RCore *core, char from, const char *str) { // "arp" 
 			for (i = 0; i < R_REG_TYPE_LAST; i++) {
 				r_list_foreach (core->dbg->reg->regset[i].regs, iter, r) {
 					pj_o (pj);
-					pj_kn (pj, "type", r->type);
+					pj_kU (pj, "type", r->type);
 					pj_ks (pj, "type_str", r_reg_get_type (r->type));
 					pj_ks (pj, "name", r->name);
-					pj_kn (pj, "size", r->size);
-					pj_kn (pj, "offset", r->offset);
+					pj_kU (pj, "size", r->size);
+					pj_kU (pj, "offset", r->offset);
 					pj_end (pj);
 				}
 			}

@@ -1139,7 +1139,7 @@ static void print_types_json(const RPdb *pdb, PJ *pj, const RList *types) {
 			pj_o (pj);
 			pj_ks (pj, "type", "structure");
 			pj_ks (pj, "name", name);
-			pj_kn (pj, "size", size);
+			pj_kU (pj, "size", size);
 			pj_ka (pj, "members");
 
 			if (members) {
@@ -1161,7 +1161,7 @@ static void print_types_json(const RPdb *pdb, PJ *pj, const RList *types) {
 					}
 					pj_ks (pj, "member_type", type_name);
 					pj_ks (pj, "member_name", member_name);
-					pj_kN (pj, "offset", offset);
+					pj_kS (pj, "offset", offset);
 					pj_end (pj);
 					R_FREE (type_name);
 				}
@@ -1191,7 +1191,7 @@ static void print_types_json(const RPdb *pdb, PJ *pj, const RList *types) {
 						type_info->get_val (type_info, &value);
 					}
 					pj_ks (pj, "enum_name", member_name);
-					pj_kn (pj, "enum_val", value);
+					pj_kU (pj, "enum_val", value);
 					pj_end (pj);
 				}
 			}
@@ -1381,8 +1381,8 @@ static void print_gvars(RPdb *pdb, ut64 img_base, PJ *pj, int format) {
 			case 2:
 			case 'j': // JSON
 				pj_o (pj);
-				pj_kN (pj, "address", (img_base + omap_remap ((omap) ? (omap->stream) : 0, gdata->offset + sctn_header->virtual_address)));
-				pj_kN (pj, "symtype", gdata->symtype);
+				pj_kS (pj, "address", (img_base + omap_remap ((omap) ? (omap->stream) : 0, gdata->offset + sctn_header->virtual_address)));
+				pj_kS (pj, "symtype", gdata->symtype);
 				pj_ks (pj, "section_name", sctn_header->name);
 				pj_ks (pj, "gdata_name", name);
 				pj_end (pj);

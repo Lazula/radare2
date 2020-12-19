@@ -992,8 +992,8 @@ static void list_xtr_archs(RBin *bin, int mode) {
 				pj_o (pj);
 				pj_ks (pj, "arch", arch);
 				pj_ki (pj, "bits", bits);
-				pj_kN (pj, "offset", xtr_data->offset);
-				pj_kN (pj, "size", xtr_data->size);
+				pj_kU (pj, "offset", xtr_data->offset);
+				pj_kU (pj, "size", xtr_data->size);
 				pj_ks (pj, "machine", machine);
 				pj_end (pj);
 				break;
@@ -1079,8 +1079,8 @@ R_API void r_bin_list_archs(RBin *bin, int mode) {
 			pj_o (pj);
 			pj_ks (pj, "arch", arch);
 			pj_ki (pj, "bits", bits);
-			pj_kn (pj, "offset", boffset);
-			pj_kn (pj, "size", obj_size);
+			pj_kU (pj, "offset", boffset);
+			pj_kU (pj, "size", obj_size);
 			if (!strcmp (arch, "mips")) {
 				pj_ks (pj, "isa", info->cpu);
 				pj_ks (pj, "features", info->features);
@@ -1111,8 +1111,8 @@ R_API void r_bin_list_archs(RBin *bin, int mode) {
 				pj_o (pj);
 				pj_ks (pj, "arch", arch);
 				pj_ki (pj, "bits", bits);
-				pj_kn (pj, "offset", boffset);
-				pj_kn (pj, "size", obj_size);
+				pj_kU (pj, "offset", boffset);
+				pj_kU (pj, "size", obj_size);
 				if (!strcmp (arch, "mips")) {
 					pj_ks (pj, "isa", info->cpu);
 					pj_ks (pj, "features", info->features);
@@ -1140,8 +1140,8 @@ R_API void r_bin_list_archs(RBin *bin, int mode) {
 				pj_o (pj);
 				pj_ks (pj, "arch", arch);
 				pj_ki (pj, "bits", bits);
-				pj_kn (pj, "offset", boffset);
-				pj_kn (pj, "size", obj_size);
+				pj_kU (pj, "offset", boffset);
+				pj_kU (pj, "size", obj_size);
 				if (machine) {
 					pj_ks (pj, "machine", machine);
 				}

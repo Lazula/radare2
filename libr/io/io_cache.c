@@ -113,9 +113,9 @@ R_API bool r_io_cache_list(RIO *io, int rad) {
 			io->cb_printf ("\n");
 		} else if (rad == 2) {
 			pj_o (pj);
-			pj_kn (pj, "idx", j);
-			pj_kn (pj, "addr", r_itv_begin (c->itv));
-			pj_kn (pj, "size", dataSize);
+			pj_kU (pj, "idx", j);
+			pj_kU (pj, "addr", r_itv_begin (c->itv));
+			pj_kU (pj, "size", dataSize);
 			char *hex = r_hex_bin2strdup (c->odata, dataSize);
 			pj_ks (pj, "before", hex);
 			free (hex);

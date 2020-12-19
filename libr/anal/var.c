@@ -1276,7 +1276,7 @@ R_API void r_anal_var_list_show(RAnal *anal, RAnalFunction *fcn, int kind, int m
 				pj_k (pj, "ref");
 				pj_o (pj);
 				pj_ks (pj, "base", anal->reg->name[R_REG_NAME_BP]);
-				pj_kN (pj, "offset", delta);
+				pj_kS (pj, "offset", delta);
 				pj_end (pj);
 				pj_end (pj);
 			}
@@ -1308,7 +1308,7 @@ R_API void r_anal_var_list_show(RAnal *anal, RAnalFunction *fcn, int kind, int m
 				pj_k (pj, "ref");
 				pj_o (pj);
 				pj_ks (pj, "base", anal->reg->name[R_REG_NAME_SP]);
-				pj_kN (pj, "offset", delta);
+				pj_kS (pj, "offset", delta);
 				pj_end (pj);
 				pj_end (pj);
 			}

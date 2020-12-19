@@ -328,10 +328,10 @@ static void rtti_itanium_print_class_type_info_json(class_type_info *cti) {
 
 	pj_o (pj);
 	pj_ks (pj, "type", type_to_string (cti->type));
-	pj_kn (pj, "found_at", cti->typeinfo_addr);
-	pj_kn (pj, "class_vtable", cti->class_vtable_addr);
-	pj_kn (pj, "ref_to_type_class", cti->vtable_addr);
-	pj_kn (pj, "ref_to_type_name", cti->name_addr);
+	pj_kU (pj, "found_at", cti->typeinfo_addr);
+	pj_kU (pj, "class_vtable", cti->class_vtable_addr);
+	pj_kU (pj, "ref_to_type_class", cti->vtable_addr);
+	pj_kU (pj, "ref_to_type_name", cti->name_addr);
 	pj_ks (pj, "name", cti->name);
 	pj_kb (pj, "name_unique", cti->name_unique);
 	pj_end (pj);
@@ -379,20 +379,20 @@ static void rtti_itanium_print_vmi_class_type_info_json(vmi_class_type_info *vmi
 
 	pj_o (pj);
 	pj_ks (pj, "type", type_to_string (vmi_cti->type));
-	pj_kn (pj, "found_at", vmi_cti->typeinfo_addr);
-	pj_kn (pj, "class_vtable", vmi_cti->class_vtable_addr);
-	pj_kn (pj, "ref_to_type_class", vmi_cti->vtable_addr);
-	pj_kn (pj, "ref_to_type_name", vmi_cti->name_addr);
+	pj_kU (pj, "found_at", vmi_cti->typeinfo_addr);
+	pj_kU (pj, "class_vtable", vmi_cti->class_vtable_addr);
+	pj_kU (pj, "ref_to_type_class", vmi_cti->vtable_addr);
+	pj_kU (pj, "ref_to_type_name", vmi_cti->name_addr);
 	pj_ks (pj, "name", vmi_cti->name);
 	pj_kb (pj, "name_unique", vmi_cti->name_unique);
-	pj_kn (pj, "flags", vmi_cti->vmi_flags);
+	pj_kU (pj, "flags", vmi_cti->vmi_flags);
 	pj_k (pj, "base_classes");
 	pj_a (pj);
 	int i;
 	for (i = 0; i < vmi_cti->vmi_base_count; i++) {
 		pj_o (pj);
-		pj_kn (pj, "type_desc_addr", vmi_cti->vmi_bases[i].base_class_addr);
-		pj_kN (pj, "flags", vmi_cti->vmi_bases[i].flags);
+		pj_kU (pj, "type_desc_addr", vmi_cti->vmi_bases[i].base_class_addr);
+		pj_kS (pj, "flags", vmi_cti->vmi_bases[i].flags);
 		pj_end (pj);
 	}
 	pj_end (pj);
@@ -429,13 +429,13 @@ static void rtti_itanium_print_si_class_type_info_json(si_class_type_info *si_ct
 
 	pj_o (pj);
 	pj_ks (pj, "type", type_to_string (si_cti->type));
-	pj_kn (pj, "found_at", si_cti->typeinfo_addr);
-	pj_kn (pj, "class_vtable", si_cti->class_vtable_addr);
-	pj_kn (pj, "ref_to_type_class", si_cti->vtable_addr);
-	pj_kn (pj, "ref_to_type_name", si_cti->name_addr);
+	pj_kU (pj, "found_at", si_cti->typeinfo_addr);
+	pj_kU (pj, "class_vtable", si_cti->class_vtable_addr);
+	pj_kU (pj, "ref_to_type_class", si_cti->vtable_addr);
+	pj_kU (pj, "ref_to_type_name", si_cti->name_addr);
 	pj_ks (pj, "name", si_cti->name);
 	pj_kb (pj, "name_unique", si_cti->name_unique);
-	pj_kn (pj, "ref_to_parent_type", si_cti->base_class_addr);
+	pj_kU (pj, "ref_to_parent_type", si_cti->base_class_addr);
 	pj_end (pj);
 
 	r_cons_print (pj_string (pj));

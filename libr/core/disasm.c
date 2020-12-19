@@ -1183,14 +1183,14 @@ static void ds_pre_line(RDisasmState *ds) {
 static void ds_begin_line(RDisasmState *ds) {
 	if (ds->pj) {
 		pj_o (ds->pj);
-		pj_kn (ds->pj, "offset", ds->vat);
+		pj_kU (ds->pj, "offset", ds->vat);
 		if (ds->core->anal->reflines) {
 			RAnalRefline *ref;
 			RListIter *iter;
 			// XXX Probably expensive
 			r_list_foreach (ds->core->anal->reflines, iter, ref) {
 				if (ref->from == ds->vat) {
-					pj_kn (ds->pj, "arrow", ref->to);
+					pj_kU (ds->pj, "arrow", ref->to);
 					break;
 				}
 			}
@@ -6005,7 +6005,7 @@ R_API int r_core_print_disasm_json(RCore *core, ut64 addr, ut8 *buf, int nb_byte
 		if (ret < 1) {
 			char *hex = r_asm_op_get_hex (&asmop);
 			pj_o (pj);
-			pj_kn (pj, "offset", at);
+			pj_kU (pj, "offset", at);
 			pj_ki (pj, "size", 1);
 			pj_ks (pj, "bytes", hex);
 			pj_ks (pj, "type", "invalid");
@@ -6078,18 +6078,18 @@ R_API int r_core_print_disasm_json(RCore *core, ut64 addr, ut8 *buf, int nb_byte
 		}
 
 		pj_o (pj);
-		pj_kn (pj, "offset", at);
+		pj_kU (pj, "offset", at);
 		if (ds->analop.ptr != UT64_MAX) {
-			pj_kn (pj, "ptr", ds->analop.ptr);
+			pj_kU (pj, "ptr", ds->analop.ptr);
 		}
 		if (ds->analop.val != UT64_MAX) {
-			pj_kn (pj, "val", ds->analop.val);
+			pj_kU (pj, "val", ds->analop.val);
 		}
 		pj_k (pj, "esil"); // split key and value to allow empty strings
 		pj_s (pj, R_STRBUF_SAFEGET (&ds->analop.esil));
 		pj_kb (pj, "refptr", ds->analop.refptr);
-		pj_kn (pj, "fcn_addr", f ? f->addr : 0);
-		pj_kn (pj, "fcn_last", f ? r_anal_function_max_addr (f) - ds->oplen : 0);
+		pj_kU (pj, "fcn_addr", f ? f->addr : 0);
+		pj_kU (pj, "fcn_last", f ? r_anal_function_max_addr (f) - ds->oplen : 0);
 		pj_ki (pj, "size", ds->analop.size);
 		pj_ks (pj, "opcode", opstr);
 		pj_ks (pj, "disasm", str);
@@ -6105,8 +6105,8 @@ R_API int r_core_print_disasm_json(RCore *core, ut64 addr, ut8 *buf, int nb_byte
 		// reloc is true if address in reloc table
 		pj_kb (pj, "reloc", rel);
 		// wanted the numerical values of the type information
-		pj_kn (pj, "type_num", (ut64)(ds->analop.type & UT64_MAX));
-		pj_kn (pj, "type2_num", (ut64)(ds->analop.type2 & UT64_MAX));
+		pj_kU (pj, "type_num", (ut64)(ds->analop.type & UT64_MAX));
+		pj_kU (pj, "type2_num", (ut64)(ds->analop.type2 & UT64_MAX));
 		// handle switch statements
 		if (ds->analop.switch_op && r_list_length (ds->analop.switch_op->cases) > 0) {
 			// XXX - the java caseop will still be reported in the assembly,
@@ -6118,17 +6118,17 @@ R_API int r_core_print_disasm_json(RCore *core, ut64 addr, ut8 *buf, int nb_byte
 			pj_a (pj);
 			r_list_foreach (ds->analop.switch_op->cases, iter, caseop ) {
 				pj_o (pj);
-				pj_kn (pj, "addr", caseop->addr);
-				pj_kN (pj, "value", (st64) caseop->value);
-				pj_kn (pj, "jump", caseop->jump);
+				pj_kU (pj, "addr", caseop->addr);
+				pj_kS (pj, "value", (st64) caseop->value);
+				pj_kU (pj, "jump", caseop->jump);
 				pj_end (pj);
 			}
 			pj_end (pj);
 		}
 		if (ds->analop.jump != UT64_MAX ) {
-			pj_kN (pj, "jump", ds->analop.jump);
+			pj_kS (pj, "jump", ds->analop.jump);
 			if (ds->analop.fail != UT64_MAX) {
-				pj_kn (pj, "fail", ds->analop.fail);
+				pj_kU (pj, "fail", ds->analop.fail);
 			}
 		}
 		/* add flags */
@@ -6165,7 +6165,7 @@ R_API int r_core_print_disasm_json(RCore *core, ut64 addr, ut8 *buf, int nb_byte
 				pj_a (pj);
 				r_list_foreach (refs, iter, ref) {
 					pj_o (pj);
-					pj_kn (pj, "addr", ref->addr);
+					pj_kU (pj, "addr", ref->addr);
 					pj_ks (pj, "type", r_anal_xrefs_type_tostring (ref->type));
 					pj_end (pj);
 				}
@@ -6183,7 +6183,7 @@ R_API int r_core_print_disasm_json(RCore *core, ut64 addr, ut8 *buf, int nb_byte
 				pj_a (pj);
 				r_list_foreach (xrefs, iter, ref) {
 					pj_o (pj);
-					pj_kn (pj, "addr", ref->addr);
+					pj_kU (pj, "addr", ref->addr);
 					pj_ks (pj, "type", r_anal_xrefs_type_tostring (ref->type));
 					pj_end (pj);
 				}

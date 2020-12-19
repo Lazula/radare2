@@ -59,11 +59,11 @@ static void print_string(RBinFile *bf, RBinString *string, int raw, PJ *pj) {
 		{
 			if (pj) {
 				pj_o (pj);
-				pj_kn (pj, "vaddr", vaddr);
-				pj_kn (pj, "paddr", string->paddr);
-				pj_kn (pj, "ordinal", string->ordinal);
-				pj_kn (pj, "size", string->size);
-				pj_kn (pj, "length", string->length);
+				pj_kU (pj, "vaddr", vaddr);
+				pj_kU (pj, "paddr", string->paddr);
+				pj_kU (pj, "ordinal", string->ordinal);
+				pj_kU (pj, "size", string->size);
+				pj_kU (pj, "length", string->length);
 				pj_ks (pj, "section", section_name);
 				pj_ks (pj, "type", type_string);
 				pj_ks (pj, "string", string->string);

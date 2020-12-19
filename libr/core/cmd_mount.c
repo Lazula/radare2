@@ -180,7 +180,7 @@ static int cmd_mount(void *data, const char *_input) {
 				pj_o (pj);
 				pj_ks (pj, "path", root->path);
 				pj_ks (pj, "plugin", root->p->name);
-				pj_kn (pj, "offset", root->delta);
+				pj_kU (pj, "offset", root->delta);
 				pj_end (pj);
 			}
 			pj_end (pj);

@@ -133,7 +133,7 @@ static void opex(RStrBuf *buf, cs_insn *insn, int mode) {
 			break;
 		case X86_OP_IMM:
 			pj_ks (pj, "type", "imm");
-			pj_kN (pj, "value", (st64)op->imm);
+			pj_kS (pj, "value", (st64)op->imm);
 			break;
 		case X86_OP_MEM:
 			pj_ks (pj, "type", "mem");
@@ -147,7 +147,7 @@ static void opex(RStrBuf *buf, cs_insn *insn, int mode) {
 				pj_ks (pj, "index", cs_reg_name (handle, op->mem.index));
 			}
 			pj_ki (pj, "scale", op->mem.scale);
-			pj_kN (pj, "disp", (st64)op->mem.disp);
+			pj_kS (pj, "disp", (st64)op->mem.disp);
 			break;
 		default:
 			pj_ks (pj, "type", "invalid");
@@ -166,7 +166,7 @@ static void opex(RStrBuf *buf, cs_insn *insn, int mode) {
 		pj_ki (pj, "sib", x->sib);
 	}
 	if (x->disp) {
-		pj_kN (pj, "disp", (st64)x->disp);
+		pj_kS (pj, "disp", (st64)x->disp);
 	}
 	if (x->sib_index) {
 		pj_ks (pj, "sib_index", cs_reg_name (handle, x->sib_index));

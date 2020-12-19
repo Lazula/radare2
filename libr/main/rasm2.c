@@ -75,24 +75,24 @@ static int showanal(RAsmState *as, RAnalOp *op, ut64 offset, ut8 *buf, int len, 
 	char *bytes = r_hex_bin2strdup (buf, ret);
 	if (as->json) {
 		pj_o (pj);
-		pj_kn (pj, "opcode", offset);
+		pj_kU (pj, "opcode", offset);
 		pj_ks (pj, "bytes", bytes);
 		pj_ks (pj, "type", optype);
 		if (op->jump != UT64_MAX) {
-			pj_kn (pj, "jump", op->jump);
+			pj_kU (pj, "jump", op->jump);
 		}
 		if (op->fail != UT64_MAX) {
-			pj_kn (pj, "fail", op->fail);
+			pj_kU (pj, "fail", op->fail);
 		}
 		if (op->val != UT64_MAX) {
-			pj_kn (pj, "val", op->val);
+			pj_kU (pj, "val", op->val);
 		}
 		if (op->ptr != UT64_MAX) {
-			pj_kn (pj, "ptr", op->ptr);
+			pj_kU (pj, "ptr", op->ptr);
 		}
 		pj_ks (pj, "stackop", stackop);
 		pj_ks (pj, "esil", r_strbuf_get (&op->esil));
-		pj_kn (pj, "stackptr", op->stackptr);
+		pj_kU (pj, "stackptr", op->stackptr);
 		pj_end (pj);
 	} else {
 		printf ("offset:   0x%08" PFMT64x "\n", offset);

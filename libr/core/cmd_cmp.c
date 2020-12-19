@@ -275,7 +275,7 @@ static int radare_compare(RCore *core, const ut8 *f, const ut8 *d, int len, int 
 			break;
 		case 'j':
 			pj_o (pj);
-			pj_kn (pj, "offset", core->offset + i);
+			pj_kU (pj, "offset", core->offset + i);
 			pj_ki (pj, "rel_offset", i);
 			pj_ki (pj, "value", (int)f[i]);
 			pj_ki (pj, "cmp_value", (int)d[i]);

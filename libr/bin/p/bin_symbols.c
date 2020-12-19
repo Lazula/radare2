@@ -410,8 +410,8 @@ static void header(RBinFile *bf) {
 	}
 
 	pj_o (pj);
-	pj_kn (pj, "cs_version", element->hdr->version);
-	pj_kn (pj, "size", element->hdr->size);
+	pj_kU (pj, "cs_version", element->hdr->version);
+	pj_kU (pj, "size", element->hdr->size);
 	if (element->file_name) {
 		pj_ks (pj, "name", element->file_name);
 	}
@@ -421,11 +421,11 @@ static void header(RBinFile *bf) {
 	char uuidstr[R_UUID_LENGTH];
 	r_hex_bin2str (element->hdr->uuid, 16, uuidstr);
 	pj_ks (pj, "uuid", uuidstr);
-	pj_kn (pj, "segments", element->hdr->n_segments);
-	pj_kn (pj, "sections", element->hdr->n_sections);
-	pj_kn (pj, "symbols", element->hdr->n_symbols);
-	pj_kn (pj, "lined_symbols", element->hdr->n_lined_symbols);
-	pj_kn (pj, "line_info", element->hdr->n_line_info);
+	pj_kU (pj, "segments", element->hdr->n_segments);
+	pj_kU (pj, "sections", element->hdr->n_sections);
+	pj_kU (pj, "symbols", element->hdr->n_symbols);
+	pj_kU (pj, "lined_symbols", element->hdr->n_lined_symbols);
+	pj_kU (pj, "line_info", element->hdr->n_line_info);
 	pj_end (pj);
 
 	p ("%s\n", pj_string (pj));

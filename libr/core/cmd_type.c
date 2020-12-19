@@ -1195,7 +1195,7 @@ static int cmd_type(void *data, const char *input) {
 									RListIter *iter;
 									RTypeEnum *member;
 									r_list_foreach (list, iter, member) {
-										pj_kn (pj, member->name, r_num_math (NULL, member->val));
+										pj_kU (pj, member->name, r_num_math (NULL, member->val));
 									}
 									pj_end (pj);
 								}
@@ -1224,7 +1224,7 @@ static int cmd_type(void *data, const char *input) {
 						pj_k (pj, "values");
 						pj_o (pj);
 						r_list_foreach (list, iter, member) {
-							pj_kn (pj, member->name, r_num_math (NULL, member->val));
+							pj_kU (pj, member->name, r_num_math (NULL, member->val));
 						}
 						pj_end (pj);
 						pj_end (pj);

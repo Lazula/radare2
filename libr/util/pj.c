@@ -127,7 +127,7 @@ R_API PJ *pj_knull(PJ *j, const char *k) {
 	return j;
 }
 
-R_API PJ *pj_kn(PJ *j, const char *k, ut64 n) {
+R_API PJ *pj_kU(PJ *j, const char *k, ut64 n) {
 	r_return_val_if_fail (j && k, j);
 	pj_k (j, k);
 	if (j->num_encoding != PJ_ENCODING_NUM_DEFAULT) {
@@ -138,7 +138,7 @@ R_API PJ *pj_kn(PJ *j, const char *k, ut64 n) {
 	return j;
 }
 
-R_API PJ *pj_kN(PJ *j, const char *k, st64 n) {
+R_API PJ *pj_kS(PJ *j, const char *k, st64 n) {
 	if (j && k) {
 		pj_k (j, k);
 		pj_N (j, n);

@@ -21,25 +21,25 @@ R_API void r_core_annotated_code_print_json(RAnnotatedCode *code) {
 	RCodeAnnotation *annotation;
 	r_vector_foreach (&code->annotations, annotation) {
 		pj_o (pj);
-		pj_kn (pj, "start", (ut64)annotation->start);
-		pj_kn (pj, "end", (ut64)annotation->end);
+		pj_kU (pj, "start", (ut64)annotation->start);
+		pj_kU (pj, "end", (ut64)annotation->end);
 		switch (annotation->type) {
 		case R_CODE_ANNOTATION_TYPE_OFFSET:
 			pj_ks (pj, "type", "offset");
-			pj_kn (pj, "offset", annotation->offset.offset);
+			pj_kU (pj, "offset", annotation->offset.offset);
 			break;
 		case R_CODE_ANNOTATION_TYPE_FUNCTION_NAME:
 			pj_ks (pj, "type", "function_name");
 			pj_ks (pj, "name", annotation->reference.name);
-			pj_kn (pj, "offset", annotation->reference.offset);
+			pj_kU (pj, "offset", annotation->reference.offset);
 			break;
 		case R_CODE_ANNOTATION_TYPE_GLOBAL_VARIABLE:
 			pj_ks (pj, "type", "global_variable");
-			pj_kn (pj, "offset", annotation->reference.offset);
+			pj_kU (pj, "offset", annotation->reference.offset);
 			break;
 		case R_CODE_ANNOTATION_TYPE_CONSTANT_VARIABLE:
 			pj_ks (pj, "type", "constant_variable");
-			pj_kn (pj, "offset", annotation->reference.offset);
+			pj_kU (pj, "offset", annotation->reference.offset);
 			break;
 		case R_CODE_ANNOTATION_TYPE_LOCAL_VARIABLE:
 			pj_ks (pj, "type", "local_variable");

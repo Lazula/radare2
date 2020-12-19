@@ -595,7 +595,7 @@ R_API PJ *r_pkcs7_cms_json (RCMS *container) {
 		pj = pj_new ();
 
 		pj_o (pj);
-		pj_kn (pj, "Version", container->signedData.version);
+		pj_kU (pj, "Version", container->signedData.version);
 
 		if (container->signedData.digestAlgorithms.elements) {
 			pj_k (pj, "DigestAlgorithms");

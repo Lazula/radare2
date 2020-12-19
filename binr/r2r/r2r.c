@@ -516,7 +516,7 @@ static void test_result_to_json(PJ *pj, R2RTestResultInfo *result) {
 		pj_s (pj, "asm");
 		pj_ks (pj, "arch", test->asm_test->arch);
 		pj_ki (pj, "bits", test->asm_test->bits);
-		pj_kn (pj, "line", test->asm_test->line);
+		pj_kU (pj, "line", test->asm_test->line);
 		break;
 	case R2R_TEST_TYPE_JSON:
 		pj_s (pj, "json");
@@ -543,7 +543,7 @@ static void test_result_to_json(PJ *pj, R2RTestResultInfo *result) {
 		break;
 	}
 	pj_kb (pj, "run_failed", result->run_failed);
-	pj_kn (pj, "time_elapsed", result->time_elapsed);
+	pj_kU (pj, "time_elapsed", result->time_elapsed);
 	pj_kb (pj, "timeout", result->timeout);
 	pj_end (pj);
 }

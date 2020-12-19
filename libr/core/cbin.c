@@ -450,11 +450,11 @@ static void _print_strings(RCore *r, RList *list, int mode, int va) {
 		} else if (IS_MODE_JSON (mode)) {
 			int *block_list;
 			pj_o (pj);
-			pj_kn (pj, "vaddr", vaddr);
-			pj_kn (pj, "paddr", paddr);
-			pj_kn (pj, "ordinal", string->ordinal);
-			pj_kn (pj, "size", string->size);
-			pj_kn (pj, "length", string->length);
+			pj_kU (pj, "vaddr", vaddr);
+			pj_kU (pj, "paddr", paddr);
+			pj_kU (pj, "ordinal", string->ordinal);
+			pj_kU (pj, "size", string->size);
+			pj_kU (pj, "length", string->length);
 			pj_ks (pj, "section", section_name);
 			pj_ks (pj, "type", type_string);
 			// data itself may be encoded so use pj_ks
@@ -1191,7 +1191,7 @@ static int bin_dwarf(RCore *core, int mode) {
 				pj_ks (j, "name", "CC");
 				pj_ks (j, "file", file);
 				pj_ki (j, "line_num", (int) row->line);
-				pj_kn (j, "addr", row->address);
+				pj_kU (j, "addr", row->address);
 				pj_end (j);
 
 				pj_o (j);
@@ -1199,7 +1199,7 @@ static int bin_dwarf(RCore *core, int mode) {
 				pj_ks (j, "file", file);
 				pj_ki (j, "line_num", (int) row->line);
 				pj_ks (j, "line", r_str_get (line));
-				pj_kn (j, "addr", row->address);
+				pj_kU (j, "addr", row->address);
 				pj_end (j);
 
 				pj_end (j);
@@ -1787,10 +1787,10 @@ static int bin_relocs(RCore *r, int mode, int va) {
 				}
 				pj_ks (pj, "demname", r_str_get (mn));
 				pj_ks (pj, "type", bin_reloc_type_name (reloc));
-				pj_kn (pj, "vaddr", reloc->vaddr);
-				pj_kn (pj, "paddr", reloc->paddr);
+				pj_kU (pj, "vaddr", reloc->vaddr);
+				pj_kU (pj, "paddr", reloc->paddr);
 				if (reloc->symbol) {
-					pj_kn (pj, "sym_va", reloc->symbol->vaddr);
+					pj_kU (pj, "sym_va", reloc->symbol->vaddr);
 				}
 				pj_kb (pj, "is_ifunc", reloc->is_ifunc);
 				// end reloc item
@@ -2051,7 +2051,7 @@ static int bin_imports(RCore *r, int mode, int va, const char *name) {
 			if (libname) {
 				pj_ks (pj, "libname", libname);
 			}
-			pj_kn (pj, "plt", addr);
+			pj_kU (pj, "plt", addr);
 			pj_end (pj);
 			free (str);
 		} else if (IS_MODE_RAD (mode)) {
@@ -2409,10 +2409,10 @@ static int bin_symbols(RCore *r, int mode, ut64 laddr, int va, ut64 at, const ch
 			pj_ks (pj, "realname", symbol->name);
 			pj_ki (pj, "ordinal", symbol->ordinal);
 			pj_ks (pj, "bind", symbol->bind);
-			pj_kn (pj, "size", (ut64)symbol->size);
+			pj_kU (pj, "size", (ut64)symbol->size);
 			pj_ks (pj, "type", symbol->type);
-			pj_kn (pj, "vaddr", addr);
-			pj_kn (pj, "paddr", symbol->paddr);
+			pj_kU (pj, "vaddr", addr);
+			pj_kU (pj, "paddr", symbol->paddr);
 			pj_kb (pj, "is_imported", symbol->is_imported);
 			pj_end (pj);
 			free (str);
@@ -3876,9 +3876,9 @@ static void bin_elf_versioninfo(RCore *r, int mode) {
 		if (IS_MODE_JSON (mode)) {
 			pj_o (pj);
 			pj_ks (pj, "section_name", section_name);
-			pj_kn (pj, "address", addr);
-			pj_kn (pj, "offset", offset);
-			pj_kn (pj, "link", link);
+			pj_kU (pj, "address", addr);
+			pj_kU (pj, "offset", offset);
+			pj_kU (pj, "link", link);
 			pj_ks (pj, "link_section_name", link_section_name);
 			pj_ka (pj, "entries");
 		} else {
@@ -3897,7 +3897,7 @@ static void bin_elf_versioninfo(RCore *r, int mode) {
 				if (IS_MODE_JSON (mode)) {
 					char *escaped_value = r_str_escape (value);
 					pj_o (pj);
-					pj_kn (pj, "idx", (ut64)i);
+					pj_kU (pj, "idx", (ut64)i);
 					pj_ks (pj, "value", escaped_value);
 					pj_end (pj);
 					free (escaped_value);
@@ -3933,9 +3933,9 @@ static void bin_elf_versioninfo(RCore *r, int mode) {
 		if (IS_MODE_JSON (mode)) {
 			pj_o (pj);
 			pj_ks (pj, "section_name", section_name);
-			pj_kn (pj, "address", address);
-			pj_kn (pj, "offset", offset);
-			pj_kn (pj, "link", link);
+			pj_kU (pj, "address", address);
+			pj_kU (pj, "offset", offset);
+			pj_kU (pj, "link", link);
 			pj_ks (pj, "link_section_name", link_section_name);
 			pj_ka (pj, "entries");
 		} else {
@@ -3957,7 +3957,7 @@ static void bin_elf_versioninfo(RCore *r, int mode) {
 			}
 			if (IS_MODE_JSON (mode)) {
 				pj_o (pj);
-				pj_kn (pj, "idx", sdb_num_get (sdb, "idx", 0));
+				pj_kU (pj, "idx", sdb_num_get (sdb, "idx", 0));
 				pj_ki (pj, "vn_version", (int)sdb_num_get (sdb, "vn_version", 0));
 			} else {
 				r_cons_printf ("  0x%08"PFMT64x": Version: %d",
@@ -3993,7 +3993,7 @@ static void bin_elf_versioninfo(RCore *r, int mode) {
 				const int version = (int)sdb_num_get (sdb, "version", 0);
 				if (IS_MODE_JSON (mode)) {
 					pj_o (pj);
-					pj_kn (pj, "idx", idx);
+					pj_kU (pj, "idx", idx);
 					pj_ks (pj, "name", name);
 					pj_ks (pj, "flags", flags);
 					pj_ki (pj, "version", version);
@@ -4069,7 +4069,7 @@ static void bin_pe_resources(RCore *r, int mode) {
 			pj_ks (pj, "name", name);
 			pj_ki (pj, "index", index);
 			pj_ks (pj, "type", type);
-			pj_kn (pj, "vaddr", vaddr);
+			pj_kU (pj, "vaddr", vaddr);
 			pj_ki (pj, "size", size);
 			pj_ks (pj, "lang", lang);
 			pj_ks (pj, "timestamp", timestr);

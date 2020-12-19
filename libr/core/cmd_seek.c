@@ -513,7 +513,7 @@ static int cmd_seek(void *data, const char *input) {
 				ut64 *addr = r_list_get_n (addrs, i);
 				const char *name = r_list_get_n (names, i);
 				pj_o (pj);
-				pj_kn (pj, "offset", *addr);
+				pj_kU (pj, "offset", *addr);
 				if (name && *name) {
 					pj_ks (pj, "name", name);
 				}

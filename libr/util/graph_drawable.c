@@ -88,7 +88,7 @@ R_API void r_graph_drawable_to_json(RGraph /*RGraphNodeInfo*/ *graph, PJ *pj, bo
 			pj_ks (pj, "body", print_node->body);
 		}
 		if (use_offset) {
-			pj_kn (pj, "offset", print_node->offset);
+			pj_kU (pj, "offset", print_node->offset);
 		}
 		pj_k (pj, "out_nodes");
 		pj_a (pj);

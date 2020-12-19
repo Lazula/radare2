@@ -1168,7 +1168,7 @@ static int cmd_an(RCore *core, bool use_json, const char *name) {
 			pj_o (pj);
 			pj_ks (pj, "name", var->name);
 			pj_ks (pj, "type", "var");
-			pj_kn (pj, "offset", tgt_addr);
+			pj_kU (pj, "offset", tgt_addr);
 			pj_end (pj);
 		} else {
 			r_cons_println (var->name);
@@ -1185,7 +1185,7 @@ static int cmd_an(RCore *core, bool use_json, const char *name) {
 				pj_o (pj);
 				pj_ks (pj, "name", fcn->name);
 				pj_ks (pj, "type", "function");
-				pj_kn (pj, "offset", tgt_addr);
+				pj_kU (pj, "offset", tgt_addr);
 				pj_end (pj);
 			}
 		} else if (f) {
@@ -1205,7 +1205,7 @@ static int cmd_an(RCore *core, bool use_json, const char *name) {
 					pj_ks (pj, "realname", f->realname);
 				}
 				pj_ks (pj, "type", "flag");
-				pj_kn (pj, "offset", tgt_addr);
+				pj_kU (pj, "offset", tgt_addr);
 				pj_end (pj);
 			}
 		} else {
@@ -1217,7 +1217,7 @@ static int cmd_an(RCore *core, bool use_json, const char *name) {
 				pj_o (pj);
 				pj_ks (pj, "name", name);
 				pj_ks (pj, "type", "address");
-				pj_kn (pj, "offset", tgt_addr);
+				pj_kU (pj, "offset", tgt_addr);
 				pj_end (pj);
 			}
 		}
@@ -1927,36 +1927,36 @@ static void core_anal_bytes(RCore *core, const ut8 *buf, int len, int nops, int 
 				op.fail = hint->fail;
 			}
 			if (op.jump != UT64_MAX) {
-				pj_kn (pj, "jump", op.jump);
+				pj_kU (pj, "jump", op.jump);
 			}
 			if (op.fail != UT64_MAX) {
-				pj_kn (pj, "fail", op.fail);
+				pj_kU (pj, "fail", op.fail);
 			}
 			const char *jesil = (hint && hint->esil) ? hint->esil: esilstr;
 			if (jesil && *jesil) {
 				pj_ks (pj, "esil", jesil);
 			}
 			pj_kb (pj, "sign", op.sign);
-			pj_kn (pj, "prefix", op.prefix);
+			pj_kU (pj, "prefix", op.prefix);
 			pj_ki (pj, "id", op.id);
 			if (opexstr && *opexstr) {
 				pj_k (pj, "opex");
 				pj_j (pj, opexstr);
 			}
-			pj_kn (pj, "addr", core->offset + idx);
+			pj_kU (pj, "addr", core->offset + idx);
 			{
 				char *bytes = r_hex_bin2strdup (buf + idx, size);
 				pj_ks (pj, "bytes", bytes);
 				free (bytes);
 			}
 			if (op.val != UT64_MAX) {
-				pj_kn (pj, "val", op.val);
+				pj_kU (pj, "val", op.val);
 			}
 			if (op.disp && op.disp != UT64_MAX) {
-				pj_kn (pj, "disp", op.disp);
+				pj_kU (pj, "disp", op.disp);
 			}
 			if (op.ptr != UT64_MAX) {
-				pj_kn (pj, "ptr", op.ptr);
+				pj_kU (pj, "ptr", op.ptr);
 			}
 			pj_ki (pj, "size", size);
 			pj_ks (pj, "type", r_anal_optype_to_string (op.type));
@@ -1988,7 +1988,7 @@ static void core_anal_bytes(RCore *core, const ut8 *buf, int len, int nops, int 
 			if (strcmp (p1, "null")) {
 				pj_ks (pj, "stack", p1);
 			}
-			pj_kn (pj, "stackptr", op.stackptr);
+			pj_kU (pj, "stackptr", op.stackptr);
 			const char *arg = (op.type & R_ANAL_OP_TYPE_COND)
 				? r_anal_cond_tostring (op.cond): NULL;
 			if (arg) {
@@ -2323,13 +2323,13 @@ static void anal_bb_list(RCore *core, const char *input) {
 			pj_ks (pj, "addr", addr);
 			free (addr);
 			pj_kb (pj, "traced", block->traced);
-			pj_kn (pj, "ninstr", block->ninstr);
-			pj_kn (pj, "size", block->size);
+			pj_kU (pj, "ninstr", block->ninstr);
+			pj_kU (pj, "size", block->size);
 			if (block->jump != UT64_MAX) {
-				pj_kn (pj, "jump", block->jump);
+				pj_kU (pj, "jump", block->jump);
 			}
 			if (block->fail != UT64_MAX) {
-				pj_kn (pj, "fail", block->fail);
+				pj_kU (pj, "fail", block->fail);
 			}
 			if (xrefs) {
 				pj_ka (pj, "xrefs");
@@ -2580,18 +2580,18 @@ static bool anal_fcn_list_bb(RCore *core, const char *input, bool one) {
 				pj_o (pj);
 
 				if (b->jump != UT64_MAX) {
-					pj_kn (pj, "jump", b->jump);
+					pj_kU (pj, "jump", b->jump);
 				}
 				if (b->fail != UT64_MAX) {
-					pj_kn (pj, "fail", b->fail);
+					pj_kU (pj, "fail", b->fail);
 				}
 				if (b->switch_op) {
 					pj_k (pj, "switch_op");
 					pj_o (pj);
-					pj_kn (pj, "addr", b->switch_op->addr);
-					pj_kn (pj, "min_val", b->switch_op->min_val);
-					pj_kn (pj, "def_val", b->switch_op->def_val);
-					pj_kn (pj, "max_val", b->switch_op->max_val);
+					pj_kU (pj, "addr", b->switch_op->addr);
+					pj_kU (pj, "min_val", b->switch_op->min_val);
+					pj_kU (pj, "def_val", b->switch_op->def_val);
+					pj_kU (pj, "max_val", b->switch_op->max_val);
 					pj_k (pj, "cases");
 					pj_a (pj);
 					{
@@ -2599,9 +2599,9 @@ static bool anal_fcn_list_bb(RCore *core, const char *input, bool one) {
 						RAnalCaseOp *case_op;
 						r_list_foreach (b->switch_op->cases, case_op_iter, case_op) {
 							pj_o (pj);
-							pj_kn (pj, "addr", case_op->addr);
-							pj_kn (pj, "jump", case_op->jump);
-							pj_kn (pj, "value", case_op->value);
+							pj_kU (pj, "addr", case_op->addr);
+							pj_kU (pj, "jump", case_op->jump);
+							pj_kU (pj, "value", case_op->value);
 							pj_end (pj);
 						}
 					}
@@ -2610,9 +2610,9 @@ static bool anal_fcn_list_bb(RCore *core, const char *input, bool one) {
 				}
 				{
 					ut64 opaddr = __opaddr (b, addr);
-					pj_kn (pj, "opaddr", opaddr);
+					pj_kU (pj, "opaddr", opaddr);
 				}
-				pj_kn (pj, "addr", b->addr);
+				pj_kU (pj, "addr", b->addr);
 				pj_ki (pj, "size", b->size);
 				pj_ki (pj, "inputs", inputs);
 				pj_ki (pj, "outputs", outputs);
@@ -4173,8 +4173,8 @@ static int cmd_anal_fcn(RCore *core, const char *input) {
 						if (input[2] == 'j') {
 							pj_o (pj);
 							pj_ks (pj, "type", r_anal_ref_type_tostring (ref->type));
-							pj_kn (pj, "from", ref->at);
-							pj_kn (pj, "to", ref->addr);
+							pj_kU (pj, "from", ref->at);
+							pj_kU (pj, "to", ref->addr);
 							pj_end (pj);
 						} else {
 							r_cons_printf ("%c 0x%08" PFMT64x " -> ", ref->type, ref->at);
@@ -7427,7 +7427,7 @@ static void anal_axg(RCore *core, const char *input, int level, Sdb *db, int opt
 				pj_k (pj, sdb_itoa (addr, taddr, 10));
 				pj_o (pj);
 				pj_ks (pj, "type", "fcn");
-				pj_kn (pj, "fcn_addr", fcn->addr);
+				pj_kU (pj, "fcn_addr", fcn->addr);
 				pj_ks (pj, "name", fcn->name);
 				pj_k (pj, "refs");
 				pj_a (pj);
@@ -7470,7 +7470,7 @@ static void anal_axg(RCore *core, const char *input, int level, Sdb *db, int opt
 					pj_k (pj, sdb_itoa (ref->addr, taddr, 10));
 					pj_o (pj);
 					pj_ks (pj, "type", "fcn");
-					pj_kn (pj, "fcn_addr", fcn->addr);
+					pj_kU (pj, "fcn_addr", fcn->addr);
 					pj_ks (pj, "name", fcn->name);
 					pj_k (pj, "refs");
 					pj_a (pj);
@@ -7484,7 +7484,7 @@ static void anal_axg(RCore *core, const char *input, int level, Sdb *db, int opt
 					pj_k (pj, sdb_itoa (ref->addr, taddr, 10));
 					pj_o (pj);
 					pj_ks (pj, "type", "fcn");
-					pj_kn (pj, "fcn_addr", fcn->addr);
+					pj_kU (pj, "fcn_addr", fcn->addr);
 					pj_ks (pj, "refs", fcn->name);
 					pj_k (pj, "refs");
 					pj_a (pj);
@@ -7753,11 +7753,11 @@ static bool cmd_anal_refs(RCore *core, const char *input) {
 					fcn = r_anal_get_fcn_in (core->anal, ref->addr, 0);
 					char *str = get_buf_asm (core, addr, ref->addr, fcn, false);
 					pj_o (pj);
-					pj_kn (pj, "from", ref->addr);
+					pj_kU (pj, "from", ref->addr);
 					pj_ks (pj, "type", r_anal_xrefs_type_tostring (ref->type));
 					pj_ks (pj, "opcode", str);
 					if (fcn) {
-						pj_kn (pj, "fcn_addr", fcn->addr);
+						pj_kU (pj, "fcn_addr", fcn->addr);
 						pj_ks (pj, "fcn_name", fcn->name);
 					}
 					RFlagItem *fi = r_flag_get_at (core->flags, fcn? fcn->addr: ref->addr, true);
@@ -7874,8 +7874,8 @@ static bool cmd_anal_refs(RCore *core, const char *input) {
 					if (pj) {
 						pj_o (pj);
 						pj_ks (pj, "type", r_anal_xrefs_type_tostring(refi->type));
-						pj_kn (pj, "at", refi->at);
-						pj_kn (pj, "ref", refi->addr);
+						pj_kU (pj, "at", refi->at);
+						pj_kU (pj, "ref", refi->addr);
 						pj_ks (pj, "name", name);
 						pj_end (pj);
 					} else {
@@ -7930,8 +7930,8 @@ static bool cmd_anal_refs(RCore *core, const char *input) {
 						r_asm_set_pc (core->rasm, ref->addr);
 						r_asm_disassemble (core->rasm, &asmop, buf, sizeof (buf));
 						pj_o (pj);
-						pj_kn (pj, "from", ref->at);
-						pj_kn (pj, "to", ref->addr);
+						pj_kU (pj, "from", ref->at);
+						pj_kU (pj, "to", ref->addr);
 						pj_ks (pj, "type", r_anal_xrefs_type_tostring (ref->type));
 						pj_ks (pj, "opcode", r_asm_op_get_asm (&asmop));
 						pj_end (pj);

@@ -255,9 +255,9 @@ R_API void r_anal_xrefs_list(RAnal *anal, int rad) {
 					pj_ks (pj, "name", name);
 					free (name);
 				}
-				pj_kn (pj, "from", ref->at);
+				pj_kU (pj, "from", ref->at);
 				pj_ks (pj, "type", r_anal_xrefs_type_tostring (t));
-				pj_kn (pj, "addr", ref->addr);
+				pj_kU (pj, "addr", ref->addr);
 				name = anal->coreb.getNameDelta (anal->coreb.core, ref->addr);
 				if (name) {
 					r_str_replace_ch (name, ' ', 0, true);

@@ -562,7 +562,7 @@ R_API char *r_table_tojson(RTable *t) {
 				if (col->type == &r_table_type_number) {
 					ut64 n = r_num_get (NULL, item);
 					if (n) {
-						pj_kn (pj, col->name, n);
+						pj_kU (pj, col->name, n);
 					} else if (*item && *item != '0') {
 						pj_ks (pj, col->name, item);
 					}

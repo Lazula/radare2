@@ -300,7 +300,7 @@ static void opex(RStrBuf *buf, csh handle, cs_insn *insn) {
 			case ARM_SFT_ROR:
 			case ARM_SFT_RRX:
 				pj_ks (pj, "type", shift_type_name (op->shift.type));
-				pj_kn (pj, "value", (ut64)op->shift.value);
+				pj_kU (pj, "value", (ut64)op->shift.value);
 				break;
 			case ARM_SFT_ASR_REG:
 			case ARM_SFT_LSL_REG:
@@ -542,7 +542,7 @@ static void opex64(RStrBuf *buf, csh handle, cs_insn *insn) {
 			break;
 		case ARM64_OP_IMM:
 			pj_ks (pj, "type", "imm");
-			pj_kN (pj, "value", (st64)op->imm);
+			pj_kS (pj, "value", (st64)op->imm);
 			break;
 		case ARM64_OP_MEM:
 			pj_ks (pj, "type", "mem");
@@ -560,7 +560,7 @@ static void opex64(RStrBuf *buf, csh handle, cs_insn *insn) {
 			break;
 		case ARM64_OP_CIMM:
 			pj_ks (pj, "type", "cimm");
-			pj_kN (pj, "value", (st64)op->imm);
+			pj_kS (pj, "value", (st64)op->imm);
 			break;
 		case ARM64_OP_PSTATE:
 			pj_ks (pj, "type", "pstate");
@@ -580,7 +580,7 @@ static void opex64(RStrBuf *buf, csh handle, cs_insn *insn) {
 			break;
 		case ARM64_OP_SYS:
 			pj_ks (pj, "type", "sys");
-			pj_kn (pj, "value", (ut64)op->sys);
+			pj_kU (pj, "value", (ut64)op->sys);
 			break;
 		case ARM64_OP_PREFETCH:
 			pj_ks (pj, "type", "prefetch");
@@ -615,7 +615,7 @@ static void opex64(RStrBuf *buf, csh handle, cs_insn *insn) {
 			default:
 				break;
 			}
-			pj_kn (pj, "value", (ut64)op->shift.value);
+			pj_kU (pj, "value", (ut64)op->shift.value);
 			pj_end (pj);
 		}
 		if (op->ext != ARM64_EXT_INVALID) {

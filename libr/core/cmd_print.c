@@ -3213,8 +3213,8 @@ static bool cmd_print_blocks(RCore *core, const char *input) {
 			goto cleanup;
 		}
 		pj_o (pj);
-		pj_kn (pj, "from", from);
-		pj_kn (pj, "to", to);
+		pj_kU (pj, "from", from);
+		pj_kU (pj, "to", to);
 		pj_ki (pj, "blocksize", piece);
 		pj_k (pj, "blocks");
 		pj_a (pj);
@@ -3249,8 +3249,8 @@ static bool cmd_print_blocks(RCore *core, const char *input) {
 				|| (as->block[p].symbols)
 				|| (as->block[p].perm)
 				|| (as->block[p].strings)) {
-				pj_kn (pj, "offset", at);
-				pj_kn (pj, "size", piece);
+				pj_kU (pj, "offset", at);
+				pj_kU (pj, "size", piece);
 			}
 			if (as->block[p].flags) {
 				pj_ki (pj, "flags", as->block[p].flags);
@@ -3869,9 +3869,9 @@ static void cmd_print_bars(RCore *core, const char *input) {
 			}
 
 			pj_o (pj);
-			pj_kn (pj, "blocksize", blocksize);
-			pj_kn (pj, "address", from);
-			pj_kn (pj, "size", totalsize);
+			pj_kU (pj, "blocksize", blocksize);
+			pj_kU (pj, "address", from);
+			pj_kU (pj, "size", totalsize);
 			pj_k (pj, "entropy");
 			pj_a (pj);
 
@@ -3880,7 +3880,7 @@ static void cmd_print_bars(RCore *core, const char *input) {
 				ut64 off = blocksize * i;
 				off += from;
 				pj_o (pj);
-				pj_kn (pj, "addr", off);
+				pj_kU (pj, "addr", off);
 				pj_ki (pj, "value", ep);
 				pj_end (pj);
 
@@ -4413,7 +4413,7 @@ static void print_json_string(RCore *core, const char* block, int len, const cha
 	pj_o (pj);
 	// TODO: add pj_kd for data to pass key(string) and value(data,len) instead of pj_ks which null terminates
 	pj_ks (pj, "string", str);
-	pj_kn (pj, "offset", core->offset);
+	pj_kU (pj, "offset", core->offset);
 	pj_ks (pj, "section", section_name);
 	pj_ki (pj, "legnth", len);
 	r_cons_printf (",\"length\":%d", len);
@@ -4556,8 +4556,8 @@ static void cmd_pxr(RCore *core, int len, int mode, int wordsize, const char *ar
 			ut64 val = read_value (buf + i, wordsize, be);
 			if (pj) {
 				pj_o (pj);
-				pj_kn (pj, "addr", addr);
-				pj_kn (pj, "value", val);
+				pj_kU (pj, "addr", addr);
+				pj_kU (pj, "value", val);
 			}
 
 			// XXX: this only works in little endian
@@ -5114,8 +5114,8 @@ static int cmd_print(void *data, const char *input) {
 								}
 								pj_o (pj);
 								pj_ks (pj, "dest", dst2);
-								pj_kn (pj, "addr", refi->addr);
-								pj_kn (pj, "at", refi->at);
+								pj_kU (pj, "addr", refi->addr);
+								pj_kU (pj, "at", refi->at);
 								pj_end (pj);
 								r_anal_op_free (op);
 							} else {
@@ -5410,8 +5410,8 @@ static int cmd_print(void *data, const char *input) {
 					}
 					pj_o (pj);
 					pj_ks (pj, "name", f->name);
-					pj_kn (pj, "size", fcn_size);
-					pj_kn (pj, "addr", f->addr);
+					pj_kU (pj, "size", fcn_size);
+					pj_kU (pj, "addr", f->addr);
 					pj_k (pj, "ops");
 					pj_a (pj);
 					r_list_sort (f->bbs, bb_cmpaddr);

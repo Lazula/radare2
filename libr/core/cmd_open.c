@@ -429,9 +429,9 @@ static void map_list(RIO *io, int mode, RPrint *print, int fd) {
 			pj_o (pj);
 			pj_ki (pj, "map", map->id);
 			pj_ki (pj, "fd", map->fd);
-			pj_kn (pj, "delta", map->delta);
-			pj_kn (pj, "from", r_io_map_begin (map));
-			pj_kn (pj, "to", r_io_map_end (map));
+			pj_kU (pj, "delta", map->delta);
+			pj_kU (pj, "from", r_io_map_begin (map));
+			pj_kU (pj, "to", r_io_map_end (map));
 			pj_ks (pj, "perm", r_str_rwx_i (map->perm));
 			pj_ks (pj, "name", r_str_get (map->name));
 			pj_end (pj);
@@ -580,9 +580,9 @@ static void cmd_open_map(RCore *core, const char *input) {
 				pj_o (pj);
 				pj_ki (pj, "map", map->id);
 				pj_ki (pj, "fd", map->fd);
-				pj_kn (pj, "delta", map->delta);
-				pj_kn (pj, "from", r_io_map_begin (map));
-				pj_kn (pj, "to", r_io_map_end (map));
+				pj_kU (pj, "delta", map->delta);
+				pj_kU (pj, "from", r_io_map_begin (map));
+				pj_kU (pj, "to", r_io_map_end (map));
 				pj_ks (pj, "perm", r_str_rwx_i (map->perm));
 				pj_ks (pj, "name", r_str_get (map->name));
 				pj_end (pj);
@@ -1237,11 +1237,11 @@ static bool desc_list_json_cb(void *user, void *data, ut32 id) {
 	ut64 from = 0LL;
 	pj_o (pj);
 	pj_kb (pj, "raised", desc->io && (desc->io->desc == desc));
-	pj_kN (pj, "fd", desc->fd);
+	pj_kS (pj, "fd", desc->fd);
 	pj_ks (pj, "uri", desc->uri);
-	pj_kn (pj, "from", from);
+	pj_kU (pj, "from", from);
 	pj_kb (pj, "writable", desc->perm & R_PERM_W);
-	pj_kN (pj, "size", r_io_desc_size (desc));
+	pj_kS (pj, "size", r_io_desc_size (desc));
 	pj_end (pj);
 	return true;
 }

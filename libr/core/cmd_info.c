@@ -151,10 +151,10 @@ static void cmd_info_here(RCore *core, int mode) {
 
 		pj_ks (pj, "type", item->type);
 		pj_ks (pj, "perm", r_str_rwx_i (item->perm));
-		pj_kn (pj, "size", item->size);
-		pj_kn (pj, "addr", item->addr);
-		pj_kn (pj, "next", item->next);
-		pj_kn (pj, "prev", item->prev);
+		pj_kU (pj, "size", item->size);
+		pj_kU (pj, "addr", item->addr);
+		pj_kU (pj, "next", item->next);
+		pj_kU (pj, "prev", item->prev);
 		if (item->fcnname) {
 			pj_ks (pj, "fcnname", item->fcnname);
 		}
@@ -177,7 +177,7 @@ static void cmd_info_here(RCore *core, int mode) {
 				r_list_foreach (refs, iter, ref) {
 					pj_o (pj);
 					pj_ks (pj, "type", r_anal_ref_type_tostring (ref->type));
-					pj_kn (pj, "addr", ref->addr);
+					pj_kU (pj, "addr", ref->addr);
 					pj_end (pj);
 				}
 				pj_end (pj);
@@ -191,7 +191,7 @@ static void cmd_info_here(RCore *core, int mode) {
 				r_list_foreach (refs, iter, ref) {
 					pj_o (pj);
 					pj_ks (pj, "type", r_anal_ref_type_tostring (ref->type));
-					pj_kn (pj, "addr", ref->addr);
+					pj_kU (pj, "addr", ref->addr);
 					pj_end (pj);
 				}
 				pj_end (pj);

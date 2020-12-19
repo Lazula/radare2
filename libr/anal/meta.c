@@ -287,7 +287,7 @@ R_API void r_meta_print(RAnal *a, RAnalMetaItem *d, ut64 start, ut64 size, int r
 		switch (rad) {
 		case 'j':
 			pj_o (pj);
-			pj_kn (pj, "offset", start);
+			pj_kU (pj, "offset", start);
 			pj_ks (pj, "type", r_meta_type_to_string (d->type));
 
 			if (d->type == 'H') {
@@ -317,7 +317,7 @@ R_API void r_meta_print(RAnal *a, RAnalMetaItem *d, ut64 start, ut64 size, int r
 				}
 			}
 			if (d->type == 'd') {
-				pj_kn (pj, "size", size);
+				pj_kU (pj, "size", size);
 			} else if (d->type == 's') {
 				const char *enc;
 				switch (d->subtype) {

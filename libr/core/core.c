@@ -2115,7 +2115,7 @@ R_API char *r_core_anal_hasrefs_to_depth(RCore *core, ut64 value, PJ *pj, int de
 	RStrBuf *s = r_strbuf_new (NULL);
 	if (pj) {
 		pj_o (pj);
-		pj_kn (pj, "addr", value);
+		pj_kU (pj, "addr", value);
 	}
 	if (depth < 1 || value == UT64_MAX) {
 		if (pj) {

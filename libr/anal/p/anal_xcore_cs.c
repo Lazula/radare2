@@ -39,7 +39,7 @@ static void opex(RStrBuf *buf, csh handle, cs_insn *insn) {
 			if (op->mem.base != XCORE_REG_INVALID) {
 				pj_ks (pj, "base", cs_reg_name (handle, op->mem.base));
 			}
-			pj_kN (pj, "disp", (st64)op->mem.disp);
+			pj_kS (pj, "disp", (st64)op->mem.disp);
 			break;
 		default:
 			pj_ks (pj, "type", "invalid");

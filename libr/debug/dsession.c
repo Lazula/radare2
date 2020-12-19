@@ -259,8 +259,8 @@ static bool serialize_register_cb(void *db, const ut64 k, const void *v) {
 
 	r_vector_foreach (vreg, reg) {
 		pj_o (j);
-		pj_kN (j, "cnum", reg->cnum);
-		pj_kn (j, "data", reg->data);
+		pj_kS (j, "cnum", reg->cnum);
+		pj_kU (j, "data", reg->data);
 		pj_end (j);
 	}
 
@@ -286,8 +286,8 @@ static bool serialize_memory_cb(void *db, const ut64 k, const void *v) {
 
 	r_vector_foreach (vmem, mem) {
 		pj_o (j);
-		pj_kN (j, "cnum", mem->cnum);
-		pj_kn (j, "data", mem->data);
+		pj_kS (j, "cnum", mem->cnum);
+		pj_kU (j, "data", mem->data);
 		pj_end (j);
 	}
 
@@ -325,11 +325,11 @@ static void serialize_checkpoints(Sdb *db, RVector *checkpoints) {
 			RRegArena *arena = chkpt->arena[i];
 			if (arena->bytes) {
 				pj_o (j);
-				pj_kn (j, "arena", i);
+				pj_kU (j, "arena", i);
 				char *ebytes = sdb_encode ((const void *)arena->bytes, arena->size);
 				pj_ks (j, "bytes", ebytes);
 				free (ebytes);
-				pj_kn (j, "size", arena->size);
+				pj_kU (j, "size", arena->size);
 				pj_end (j);
 			}
 		}
@@ -342,9 +342,9 @@ static void serialize_checkpoints(Sdb *db, RVector *checkpoints) {
 		r_list_foreach (chkpt->snaps, iter, snap) {
 			pj_o (j);
 			pj_ks (j, "name", snap->name);
-			pj_kn (j, "addr", snap->addr);
-			pj_kn (j, "addr_end", snap->addr_end);
-			pj_kn (j, "size", snap->size);
+			pj_kU (j, "addr", snap->addr);
+			pj_kU (j, "addr_end", snap->addr_end);
+			pj_kU (j, "size", snap->size);
 			char *edata = sdb_encode ((const void *)snap->data, snap->size);
 			if (!edata) {
 				pj_free (j);
@@ -352,8 +352,8 @@ static void serialize_checkpoints(Sdb *db, RVector *checkpoints) {
 			}
 			pj_ks (j, "data", edata);
 			free (edata);
-			pj_kn (j, "perm", snap->perm);
-			pj_kn (j, "user", snap->user);
+			pj_kU (j, "perm", snap->perm);
+			pj_kU (j, "user", snap->user);
 			pj_kb (j, "shared", snap->shared);
 			pj_end (j);
 		}

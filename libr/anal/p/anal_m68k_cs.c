@@ -79,7 +79,7 @@ static void opex(RStrBuf *buf, csh handle, cs_insn *insn) {
 			break;
 		case M68K_OP_IMM:
 			pj_ks (pj, "type", "imm");
-			pj_kN (pj, "value", (st64)op->imm);
+			pj_kS (pj, "value", (st64)op->imm);
 			break;
 		case M68K_OP_MEM:
 			pj_ks (pj, "type", "mem");
@@ -92,14 +92,14 @@ static void opex(RStrBuf *buf, csh handle, cs_insn *insn) {
 			if (op->mem.in_base_reg != M68K_REG_INVALID) {
 				pj_ks (pj, "in_base_reg", cs_reg_name (handle, op->mem.in_base_reg));
 			}
-			pj_kN (pj, "in_disp", op->mem.in_disp);
-			pj_kN (pj, "out_disp", op->mem.out_disp);
-			pj_kN (pj, "disp", op->mem.disp);
-			pj_kN (pj, "scale", op->mem.scale);
-			pj_kN (pj, "bitfield", op->mem.bitfield);
-			pj_kN (pj, "width", op->mem.width);
-			pj_kN (pj, "offset", op->mem.offset);
-			pj_kN (pj, "index_size", op->mem.index_size);
+			pj_kS (pj, "in_disp", op->mem.in_disp);
+			pj_kS (pj, "out_disp", op->mem.out_disp);
+			pj_kS (pj, "disp", op->mem.disp);
+			pj_kS (pj, "scale", op->mem.scale);
+			pj_kS (pj, "bitfield", op->mem.bitfield);
+			pj_kS (pj, "width", op->mem.width);
+			pj_kS (pj, "offset", op->mem.offset);
+			pj_kS (pj, "index_size", op->mem.index_size);
 			break;
 		default:
 			pj_ks (pj, "type", "invalid");

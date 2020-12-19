@@ -128,7 +128,7 @@ static void opex(RStrBuf *buf, csh handle, cs_insn *insn) {
 			if (op->mem.base != RISCV_REG_INVALID) {
 				pj_ks (pj, "base", cs_reg_name (handle, op->mem.base));
 			}
-			pj_kN (pj, "disp", op->mem.disp);
+			pj_kS (pj, "disp", op->mem.disp);
 			break;
 		default:
 			pj_ks (pj, "type", "invalid");

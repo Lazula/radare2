@@ -396,8 +396,8 @@ static char *anal_fcn_autoname(RCore *core, RAnalFunction *fcn, int dump, int mo
 						if (mode == 'j') {
 							// add new json item
 							pj_o (pj);
-							pj_kn (pj, "addr", ref->at);
-							pj_kn (pj, "ref", ref->addr);
+							pj_kU (pj, "addr", ref->at);
+							pj_kU (pj, "ref", ref->addr);
 							pj_ks (pj, "flag", f->name);
 							pj_end (pj);
 						} else {
@@ -1195,28 +1195,28 @@ static void hint_node_print(HintNode *node, int mode, PJ *pj) {
 					pj_ki (pj, "immbase", record->immbase);
 					break;
 				case R_ANAL_ADDR_HINT_TYPE_JUMP:
-					pj_kn (pj, "jump", record->jump);
+					pj_kU (pj, "jump", record->jump);
 					break;
 				case R_ANAL_ADDR_HINT_TYPE_FAIL:
-					pj_kn (pj, "fail", record->fail);
+					pj_kU (pj, "fail", record->fail);
 					break;
 				case R_ANAL_ADDR_HINT_TYPE_STACKFRAME:
-					pj_kn (pj, "stackframe", record->stackframe);
+					pj_kU (pj, "stackframe", record->stackframe);
 					break;
 				case R_ANAL_ADDR_HINT_TYPE_PTR:
-					pj_kn (pj, "ptr", record->ptr);
+					pj_kU (pj, "ptr", record->ptr);
 					break;
 				case R_ANAL_ADDR_HINT_TYPE_NWORD:
 					pj_ki (pj, "nword", record->nword);
 					break;
 				case R_ANAL_ADDR_HINT_TYPE_RET:
-					pj_kn (pj, "ret", record->retval);
+					pj_kU (pj, "ret", record->retval);
 					break;
 				case R_ANAL_ADDR_HINT_TYPE_NEW_BITS:
 					pj_ki (pj, "newbits", record->newbits);
 					break;
 				case R_ANAL_ADDR_HINT_TYPE_SIZE:
-					pj_kn (pj, "size", record->size);
+					pj_kU (pj, "size", record->size);
 					break;
 				case R_ANAL_ADDR_HINT_TYPE_SYNTAX:
 					pj_ks (pj, "syntax", record->syntax);
@@ -1241,7 +1241,7 @@ static void hint_node_print(HintNode *node, int mode, PJ *pj) {
 					pj_kb (pj, "high", true);
 					break;
 				case R_ANAL_ADDR_HINT_TYPE_VAL:
-					pj_kn (pj, "val", record->val);
+					pj_kU (pj, "val", record->val);
 					break;
 				}
 			}
@@ -1341,7 +1341,7 @@ static void print_hint_tree(RBTree tree, int mode) {
 			last_addr = node->addr;
 			if (pj) {
 				pj_o (pj);
-				pj_kn (pj, "addr", node->addr);
+				pj_kU (pj, "addr", node->addr);
 			} else if (mode != '*') {
 				r_cons_printf (" 0x%08"PFMT64x" =>", node->addr);
 			}
@@ -1614,31 +1614,31 @@ static int core_anal_graph_construct_nodes (RCore *core, RAnalFunction *fcn, int
                         RDebugTracepoint *t = r_debug_trace_get (core->dbg, bbi->addr);
                         ut8 *buf = malloc (bbi->size);
                         pj_o (pj);
-                        pj_kn (pj, "offset", bbi->addr);
-                        pj_kn (pj, "size", bbi->size);
+                        pj_kU (pj, "offset", bbi->addr);
+                        pj_kU (pj, "size", bbi->size);
                         if (bbi->jump != UT64_MAX) {
-                                pj_kn (pj, "jump", bbi->jump);
+                                pj_kU (pj, "jump", bbi->jump);
                         }
                         if (bbi->fail != -1) {
-                                pj_kn (pj, "fail", bbi->fail);
+                                pj_kU (pj, "fail", bbi->fail);
                         }
                         if (bbi->switch_op) {
                                 RAnalSwitchOp *op = bbi->switch_op;
                                 pj_k (pj, "switchop");
                                 pj_o (pj);
-                                pj_kn (pj, "offset", op->addr);
-                                pj_kn (pj, "defval", op->def_val);
-                                pj_kn (pj, "maxval", op->max_val);
-                                pj_kn (pj, "minval", op->min_val);
+                                pj_kU (pj, "offset", op->addr);
+                                pj_kU (pj, "defval", op->def_val);
+                                pj_kU (pj, "maxval", op->max_val);
+                                pj_kU (pj, "minval", op->min_val);
                                 pj_k (pj, "cases");
                                 pj_a (pj);
                                 RAnalCaseOp *case_op;
                                 RListIter *case_iter;
                                 r_list_foreach (op->cases, case_iter, case_op) {
                                         pj_o (pj);
-                                        pj_kn (pj, "offset", case_op->addr);
-                                        pj_kn (pj, "value", case_op->value);
-                                        pj_kn (pj, "jump", case_op->jump);
+                                        pj_kU (pj, "offset", case_op->addr);
+                                        pj_kU (pj, "value", case_op->value);
+                                        pj_kU (pj, "jump", case_op->jump);
                                         pj_end (pj);
                                 }
                                 pj_end (pj);
@@ -1651,7 +1651,7 @@ static int core_anal_graph_construct_nodes (RCore *core, RAnalFunction *fcn, int
                                 pj_ki (pj, "times", t->times);
                                 pj_end (pj);
                         }
-                        pj_kn (pj, "colorize", bbi->colorize);
+                        pj_kU (pj, "colorize", bbi->colorize);
                         pj_k (pj, "ops");
                         pj_a (pj);
                         if (buf) {
@@ -1859,7 +1859,7 @@ static int core_anal_graph_nodes(RCore *core, RAnalFunction *fcn, int opts, PJ *
 		pj_o (pj);
 		pj_ks (pj, "name", r_str_getf (fcn_name_escaped));
 		free (fcn_name_escaped);
-		pj_kn (pj, "offset", fcn->addr);
+		pj_kU (pj, "offset", fcn->addr);
 		pj_ki (pj, "ninstr", fcn->ninstr);
 		pj_ki (pj, "nargs",
 			r_anal_var_count (core->anal, fcn, 'r', 1) +
@@ -1869,7 +1869,7 @@ static int core_anal_graph_nodes(RCore *core, RAnalFunction *fcn, int opts, PJ *
 			r_anal_var_count (core->anal, fcn, 'r', 0) +
 			r_anal_var_count (core->anal, fcn, 's', 0) +
 			r_anal_var_count (core->anal, fcn, 'b', 0));
-		pj_kn (pj, "size", r_anal_function_linear_size (fcn));
+		pj_kU (pj, "size", r_anal_function_linear_size (fcn));
 		pj_ki (pj, "stack", fcn->maxstack);
 		pj_ks (pj, "type", r_anal_fcntype_tostring (fcn->type));
 		pj_k (pj, "blocks");
@@ -2803,7 +2803,7 @@ static int fcn_print_makestyle(RCore *core, RList *fcns, char mode) {
 			if (pj) { // begin json output of function
 				pj_o (pj);
 				pj_ks (pj, "name", fcn->name);
-				pj_kn (pj, "addr", fcn->addr);
+				pj_kU (pj, "addr", fcn->addr);
 				pj_k (pj, "calls");
 				pj_a (pj);
 			} else {
@@ -2822,7 +2822,7 @@ static int fcn_print_makestyle(RCore *core, RList *fcns, char mode) {
 				if (pj) { // Append calee json item
 					pj_o (pj);
 					pj_ks (pj, "name", dst);
-					pj_kn (pj, "addr", refi->addr);
+					pj_kU (pj, "addr", refi->addr);
 					pj_end (pj); // close referenced item
 				} else if (mode == 'q') {
 					r_cons_printf ("%s ", dst);
@@ -2858,14 +2858,14 @@ static int fcn_print_json(RCore *core, RAnalFunction *fcn, PJ *pj) {
 	}
 	int ebbs = 0;
 	pj_o (pj);
-	pj_kn (pj, "offset", fcn->addr);
+	pj_kU (pj, "offset", fcn->addr);
 	char *name = r_core_anal_fcn_name (core, fcn);
 	if (name) {
 		pj_ks (pj, "name", name);
 	}
-	pj_kn (pj, "size", r_anal_function_linear_size (fcn));
+	pj_kU (pj, "size", r_anal_function_linear_size (fcn));
 	pj_ks (pj, "is-pure", r_str_bool (r_anal_function_purity (fcn)));
-	pj_kn (pj, "realsz", r_anal_function_realsize (fcn));
+	pj_kU (pj, "realsz", r_anal_function_realsize (fcn));
 	pj_kb (pj, "noreturn", fcn->is_noreturn);
 	pj_ki (pj, "stackframe", fcn->maxstack);
 	if (fcn->cc) {
@@ -2887,8 +2887,8 @@ static int fcn_print_json(RCore *core, RAnalFunction *fcn, PJ *pj) {
 		}
 
 	}
-	pj_kn (pj, "minbound", r_anal_function_min_addr (fcn));
-	pj_kn (pj, "maxbound", r_anal_function_max_addr (fcn));
+	pj_kU (pj, "minbound", r_anal_function_min_addr (fcn));
+	pj_kU (pj, "maxbound", r_anal_function_max_addr (fcn));
 
 	int outdegree = 0;
 	refs = r_anal_function_get_refs (fcn);
@@ -2902,9 +2902,9 @@ static int fcn_print_json(RCore *core, RAnalFunction *fcn, PJ *pj) {
 			if (refi->type == R_ANAL_REF_TYPE_CODE ||
 				refi->type == R_ANAL_REF_TYPE_CALL) {
 				pj_o (pj);
-				pj_kn (pj, "addr", refi->addr);
+				pj_kU (pj, "addr", refi->addr);
 				pj_ks (pj, "type", r_anal_xrefs_type_tostring (refi->type));
-				pj_kn (pj, "at", refi->at);
+				pj_kU (pj, "at", refi->at);
 				pj_end (pj);
 			}
 		}
@@ -2931,9 +2931,9 @@ static int fcn_print_json(RCore *core, RAnalFunction *fcn, PJ *pj) {
 				refi->type == R_ANAL_REF_TYPE_CALL) {
 				indegree++;
 				pj_o (pj);
-				pj_kn (pj, "addr", refi->addr);
+				pj_kU (pj, "addr", refi->addr);
 				pj_ks (pj, "type", r_anal_xrefs_type_tostring (refi->type));
-				pj_kn (pj, "at", refi->at);
+				pj_kU (pj, "at", refi->at);
 				pj_end (pj);
 			}
 		}
@@ -2972,7 +2972,7 @@ static int fcn_print_json(RCore *core, RAnalFunction *fcn, PJ *pj) {
 		pj_ks (pj, "difftype", fcn->diff->type == R_ANAL_DIFF_TYPE_MATCH?"match":
 				fcn->diff->type == R_ANAL_DIFF_TYPE_UNMATCH?"unmatch":"new");
 		if (fcn->diff->addr != -1) {
-			pj_kn (pj, "diffaddr", fcn->diff->addr);
+			pj_kU (pj, "diffaddr", fcn->diff->addr);
 		}
 		if (fcn->diff->name) {
 			pj_ks (pj, "diffname", fcn->diff->name);

@@ -6034,10 +6034,10 @@ R_API void r_core_panels_save(RCore *core, const char *oname) {
 		pj_o (pj);
 		pj_ks (pj, "Title", panel->model->title);
 		pj_ks (pj, "Cmd", panel->model->cmd);
-		pj_kn (pj, "x", panel->view->pos.x);
-		pj_kn (pj, "y", panel->view->pos.y);
-		pj_kn (pj, "w", panel->view->pos.w);
-		pj_kn (pj, "h", panel->view->pos.h);
+		pj_kU (pj, "x", panel->view->pos.x);
+		pj_kU (pj, "y", panel->view->pos.y);
+		pj_kU (pj, "w", panel->view->pos.w);
+		pj_kU (pj, "h", panel->view->pos.h);
 		pj_end (pj);
 	}
 	FILE *fd = r_sandbox_fopen (config_path, "w");

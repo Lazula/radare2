@@ -1724,8 +1724,8 @@ static void do_esil_search(RCore *core, struct search_parameters *param, const c
 			if (hit_happens) {
 				if (pj) {
 					pj_o (pj);
-					pj_kn (pj, "addr", addr);
-					pj_kn (pj, "value", nres);
+					pj_kU (pj, "addr", addr);
+					pj_kU (pj, "value", nres);
 					pj_end (pj);
 				}
 				hit_combo++;
