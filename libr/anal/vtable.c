@@ -301,23 +301,22 @@ R_API void r_anal_list_vtables(RAnal *anal, int rad) {
 		}
 		pj_a (pj);
 		r_list_foreach (vtables, vtableIter, table) {
-			pj_o (pj);
-			pj_kN (pj, "offset", table->saddr);
+			pj_o (pj); /* vtable */
+			pj_kS (pj, "offset", table->saddr);
 			pj_ka (pj, "methods");
 			r_vector_foreach (&table->methods, curMethod) {
 				RAnalFunction *fcn = r_anal_get_fcn_in (anal, curMethod->addr, 0);
 				const char *const name = fcn ? fcn->name : NULL;
 				pj_o (pj);
-				pj_kN (pj, "offset", curMethod->addr);
-				pj_ks (pj, "name", name ? name : noMethodName);
-				pj_end (pj);
+				pj_kS (pj, "offset", curMethod->addr);
+				pj_ks (pj, "name", r_str_get_fail(name, noMethodName));
+				pj_end (pj); /* o method */
 			}
-			pj_end (pj);
-			pj_end (pj);
+			pj_end (pj); /* a methods */
+			pj_end (pj); /* o vtable */
 		}
 		pj_end (pj);
-		r_cons_println (pj_string (pj));
-		pj_free (pj);
+		r_cons_println (pj_drain (pj));
 	} else if (rad == '*') {
 		r_list_foreach (vtables, vtableIter, table) {
 			r_cons_printf ("f vtable.0x%08"PFMT64x" %"PFMT64d" @ 0x%08"PFMT64x"\n",
@@ -342,7 +341,7 @@ R_API void r_anal_list_vtables(RAnal *anal, int rad) {
 			r_vector_foreach (&table->methods, curMethod) {
 				RAnalFunction *fcn = r_anal_get_fcn_in (anal, curMethod->addr, 0);
 				const char *const name = fcn ? fcn->name : NULL;
-				r_cons_printf ("0x%08"PFMT64x" : %s\n", vtableStartAddress, name ? name : noMethodName);
+				r_cons_printf ("0x%08"PFMT64x" : %s\n", vtableStartAddress, r_str_get_fail(name, noMethodName));
 				vtableStartAddress += context.word_size;
 			}
 			r_cons_newline ();
