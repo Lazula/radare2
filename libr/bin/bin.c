@@ -491,10 +491,9 @@ static bool r_bin_print_plugin_details(RBin *bin, RBinPlugin *bp, int json) {
 		pj_o (pj);
 		pj_ks (pj, "name", bp->name);
 		pj_ks (pj, "description", bp->desc);
-		pj_ks (pj, "license", bp->license ? bp->license : "???");
+		pj_ks (pj, "license", r_str_get_fail (bp->license, "???"));
 		pj_end (pj);
-		bin->cb_printf ("%s\n", pj_string (pj));
-		pj_free (pj);
+		bin->cb_printf ("%s\n", pj_drain (pj));
 	} else {
 		bin->cb_printf ("Name: %s\n", bp->name);
 		bin->cb_printf ("Description: %s\n", bp->desc);
@@ -522,10 +521,9 @@ static void __printXtrPluginDetails(RBin *bin, RBinXtrPlugin *bx, int json) {
 		pj_o (pj);
 		pj_ks (pj, "name", bx->name);
 		pj_ks (pj, "description", bx->desc);
-		pj_ks (pj, "license", bx->license ? bx->license : "???");
+		pj_ks (pj, "license", r_str_get_fail (bx->license, "???"));
 		pj_end (pj);
-		bin->cb_printf ("%s\n", pj_string (pj));
-		pj_free (pj);
+		bin->cb_printf ("%s\n", pj_drain (pj));
 	} else {
 		bin->cb_printf ("Name: %s\n", bx->name);
 		bin->cb_printf ("Description: %s\n", bx->desc);
@@ -584,31 +582,32 @@ R_API void r_bin_list(RBin *bin, int format) {
 			pj_o (pj);
 			pj_ks (pj, "name", bp->name);
 			pj_ks (pj, "description", bp->desc);
-			pj_ks (pj, "license", bp->license ? bp->license : "???");
+			pj_ks (pj, "license", r_str_get_fail (bp->license, "???"));
 			pj_end (pj);
 		}
-		pj_end (pj);
+		pj_end (pj); /* a bin */
+
 		pj_ka (pj, "xtr");
 		r_list_foreach (bin->binxtrs, it, bx) {
 			pj_o (pj);
 			pj_ks (pj, "name", bx->name);
 			pj_ks (pj, "description", bx->desc);
-			pj_ks (pj, "license", bx->license ? bx->license : "???");
+			pj_ks (pj, "license", r_str_get_fail (bx->license, "???"));
 			pj_end (pj);
 		}
-		pj_end (pj);
+		pj_end (pj); /* a xtr */
+
 		pj_ka (pj, "ldr");
 		r_list_foreach (bin->binxtrs, it, ld) {
 			pj_o (pj);
 			pj_ks (pj, "name", ld->name);
 			pj_ks (pj, "description", ld->desc);
-			pj_ks (pj, "license", ld->license ? ld->license : "???");
+			pj_ks (pj, "license", r_str_get_fail (ld->license, "???"));
 			pj_end (pj);
 		}
+		pj_end (pj); /* a ldr */
 		pj_end (pj);
-		pj_end (pj);
-		bin->cb_printf ("%s\n", pj_string (pj));
-		pj_free (pj);
+		bin->cb_printf ("%s\n", pj_drain (pj));
 	} else {
 		r_list_foreach (bin->plugins, it, bp) {
 			bin->cb_printf ("bin  %-11s %s (%s) %s %s\n",
@@ -988,7 +987,7 @@ static void list_xtr_archs(RBin *bin, int mode) {
 			case 'q': // "iAq"
 				bin->cb_printf ("%s\n", arch);
 				break;
-			case 'j': { // "iAj"
+			case 'j': // "iAj"
 				pj_o (pj);
 				pj_ks (pj, "arch", arch);
 				pj_ki (pj, "bits", bits);
@@ -997,7 +996,6 @@ static void list_xtr_archs(RBin *bin, int mode) {
 				pj_ks (pj, "machine", machine);
 				pj_end (pj);
 				break;
-			}
 			default:
 				bin->cb_printf ("%03i 0x%08" PFMT64x
 						" %" PFMT64d " %s_%i %s\n",
@@ -1009,9 +1007,8 @@ static void list_xtr_archs(RBin *bin, int mode) {
 		}
 
 		if (mode == 'j') {
-			pj_end (pj);
-			bin->cb_printf ("%s", pj_string (pj));
-			pj_free (pj);
+			pj_end (pj); /* a bins */
+			bin->cb_printf ("%s", pj_drain (pj));
 		}
 	}
 }
